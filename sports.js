@@ -56,17 +56,7 @@ const sports=[{
    achievement:"Running Race",
    position:"1st place"
 },
-{
-    image:{
-        data:"C:\Users\DELL\Desktop\school management\sports\cricketer-field-action.jpg",
-        contentType:"image/png",
-    },
-   events:"Upcomming Competitions",
-   recentEvent:"Cricket contest",
-   venue:"Star Stadium",
-   achievement:"Running Race",
-   position:"1st place"
-},
+
 {
     image:{
         data:"C:\Users\DELL\Desktop\school management\sports\female-professional-volleyball-players-action-3d-stadium.jpg",
