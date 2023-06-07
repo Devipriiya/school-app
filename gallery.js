@@ -3,6 +3,7 @@ import express from 'express';
 const app = express();
 import multer from "multer";
 import path from "path";
+// import ImageModel from './imagemodel';
 
 const router =express.Router();
 
@@ -20,26 +21,26 @@ const upload = multer({
     storage: Storage,
    
 }).single('testImage')
-const image={
-image:[{
-
+const imagelist=[{
+    id:1 ,
     image:{
         
-data:"C:\Users\DELL\Desktop\school management\gallery\IMG_1.jpg",
-contentType:"image/png"
-    }
+        data:"C:\Users\DELL\Desktop\school management\gallery\IMG_1.jpg",
+        contentType:"image/png"
+    },
 },
 {
-
+       
+      id:2,
         image:{
             
-    data:"C:\Users\DELL\Desktop\school management\gallery\IMG_2.jpg",
-    contentType:"image/png"
+            data:"C:\Users\DELL\Desktop\school management\gallery\IMG_2.jpg",
+            contentType:"image/png"
         
-    }  
+    } , 
 },
 {
-  
+   id:3,
     image:{
         
 data:"C:\Users\DELL\Desktop\school management\gallery\IMG_3.jpg",
@@ -47,13 +48,14 @@ contentType:"image/png"
     }
 },
 {
-  
+   id:4,
     image:{
         
 data:"C:\Users\DELL\Desktop\school management\gallery\IMG_4.jpg",
 contentType:"image/png"
     }
 },{
+   id:5,
     image:{
         
         data:"C:\Users\DELL\Desktop\school management\gallery\WhatsApp Image 2023-02-24 at 11.39.33 AM (5).jpeg",
@@ -61,62 +63,71 @@ contentType:"image/png"
             } 
 },
 {
+   id:6,
     image:{
         
         data:"C:\Users\DELL\Desktop\school management\gallery\WhatsApp Image 2023-02-24 at 11.39.33 AM (15).jpeg",
         contentType:"image/png"
             } 
 },
-{
+{   
+   id:7,
     image:{
         
         data:"C:\Users\DELL\Desktop\school management\gallery\WhatsApp Image 2023-02-24 at 11.39.33 AM (32).jpeg",
         contentType:"image/png"
             } 
 },
-{
+{   
+   id:8,
     image:{
         
         data:"C:\Users\DELL\Desktop\school management\events\IMG_3982.JPG",
         contentType:"image/png"
             } 
 },
-{
+{    
+   id:9,
     image:{
         
         data:"C:\Users\DELL\Desktop\school management\events\WhatsApp Image 2023-02-24 at 11.39.33 AM (8).jpeg",
         contentType:"image/png"
             } 
 },
-{
+{   
+   id:10,
     image:{
         
         data:"C:\Users\DELL\Desktop\school management\events\WhatsApp Image 2023-02-24 at 11.39.33 AM (11).jpeg",
         contentType:"image/png"
             } 
 },
-{
+{   
+   id:11,
     image:{
         
         data:"C:\Users\DELL\Desktop\school management\events\WhatsApp Image 2023-02-24 at 11.39.33 AM (12).jpeg",
         contentType:"image/png"
             } 
 },
-{
+{   
+   id:12,
     image:{
         
         data:"C:\Users\DELL\Desktop\school management\events\WhatsApp Image 2023-02-24 at 11.39.33 AM (20).jpeg",
         contentType:"image/png"
             } 
 },
-{
+{   
+   id:13,
     image:{
         
         data:"C:\Users\DELL\Desktop\school management\events\WhatsApp Image 2023-02-24 at 11.39.33 AM (28).jpeg",
         contentType:"image/png"
             } 
 },
-{
+{   
+   id:14,
     image:{
         
         data:"C:\Users\DELL\Desktop\school management\events\WhatsApp Image 2023-02-24 at 11.39.33 AM (30).jpeg",
@@ -125,43 +136,25 @@ contentType:"image/png"
 },
 
 ]
-}
+
 router.get('/',(req,res)=>{
-    res.send(image);
+    res.send(imagelist);
 })
 
-
-
-router.get('/:id',(req,res)=>{
-    upload(req,res,(err)=>{
-        if(err){
-            console.log(err)
+router.get("/:id", (req, res) => {
+    try {
+        const individualImage = imagelist.find(
+          (c) => c.id === Number(req.params.id)
+        );
+        if (individualImage) {
+            res.json(individualImage);
+          } else {
+            res.status(404).json({ message: "Not found" });
+          }
+        } catch (error) {
+          res.json({ message: 505 });
         }
-        else{
-            ImageModel.findById({_id:req.params.id},{
-           
-                image:{
-                    data:req.file.filename,
-                    contentType:'image/png'
-                }
-            })
-          
-            .then(result=>{
-                res.status(200).json({
-                   images:result
-                })
-            })
-            .catch(err=> {
-            console.log(err);
-            res.status(505).json({
-                error:err
-            })
-            }
-          )
-        }
-    })
-    
-})
+    });
 
 router.post('/',(req,res)=>{
     upload(req,res,(err)=>{
@@ -170,7 +163,7 @@ router.post('/',(req,res)=>{
         }
         else{
             const newImage = new ImageModel({
-            
+                id:req.body.id,
                 image:{
                     data:req.file.filename,
                     contentType:'image/png'
@@ -189,7 +182,7 @@ router.put('/:id',(req,res)=>{
         }
         else{
             ImageModel.findOneAndUpdate({_id:req.params.id},{
-             
+                id:req.body.id,
                 image:{
                     data:req.file.filename,
                     contentType:'image/png'
@@ -219,7 +212,7 @@ router.delete('/:id',(req,res)=>{
         }
         else{
             ImageModel.deleteOne({_id:req.params.id},{
-            
+                id:req.body.id,
                 image:{
                     data:req.file.filename,
                     contentType:'image/png'

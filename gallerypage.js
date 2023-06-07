@@ -20,9 +20,8 @@ const upload = multer({
     storage: Storage,
    
 }).single('testImage')
-const image={
-gallerypage:[{
-
+const gallerypage=[{
+   id:101,
     image:{
         
 data:"https://www.mountpleasantjuniors.co.uk/_images/1445100_l.png",
@@ -33,7 +32,7 @@ contentType:"image/png"
     description:"This image was taken in the year 2023 during the occassion of annual sports event which was held at chennai"
 },
 {
-
+    id:102,
         image:{
             
     data:"https://w7.pngwing.com/pngs/4/364/png-transparent-culture-day-cultural-day-2018-cultural-diversity-cultures-culture-globe-world.png",
@@ -45,7 +44,7 @@ contentType:"image/png"
     description:"This image was taken in the year 2023 during the occassion of annual sports event which was held at chennai"
 },
 {
-  
+    id:103,
     image:{
         
 data:"https://www.citypng.com/public/uploads/preview/first-day-of-school-back-to-school-cartoon-png-316295863040lf5ls6il9.png",
@@ -56,7 +55,8 @@ contentType:"image/png"
     description:"This image was taken in the year 2023 during the occassion of annual sports event which was held at chennai"
 },
 {
-  
+    id:104,
+   
     image:{
         
 data:"https://png.pngtree.com/png-clipart/20220120/ourmid/pngtree-celebration-of-happy-republic-day-of-india-balloon-flag-png-image_4342227.png",
@@ -66,6 +66,7 @@ contentType:"image/png"
     name:"By Megha",
     description:"This image was taken in the year 2023 during the occassion of annual sports event which was held at chennai"
 },{
+    id:105,
     image:{
         
         data:"https://w7.pngwing.com/pngs/537/592/png-transparent-children-s-day-banner-childrens-day-child-lovely.png",
@@ -75,7 +76,8 @@ contentType:"image/png"
             name:"By Hari",
             description:"This image was taken in the year 2023 during the occassion of annual sports event which was held at chennai"
 },
-{
+{   
+    id:106,
     image:{
         
         data:"https://e7.pngegg.com/pngimages/610/226/png-clipart-blue-green-and-orange-illustration-indian-independence-day-august-15-flag-of-india-independence-day-bubble-wish-culture.png",
@@ -85,7 +87,8 @@ contentType:"image/png"
             name:"By Aswini",
             description:"This image was taken in the year 2023 during the occassion of annual sports event which was held at chennai"
 },
-{
+{   
+    id:107,
     image:{
         
         data:"https://toppng.com/uploads/preview/happy-teachers-day-transparent-happy-teachers-day-11563045098jkhxonw803.png",
@@ -95,7 +98,8 @@ contentType:"image/png"
             name:"By Sridhar",
             description:"This image was taken in the year 2023 during the occassion of annual sports event which was held at chennai"
 },
-{
+{   
+    id:108,
     image:{
         
         data:"https://w7.pngwing.com/pngs/841/26/png-transparent-pongal-festival-thumbnail.png",
@@ -106,6 +110,7 @@ contentType:"image/png"
             description:"This image was taken in the year 2023 during the occassion of annual sports event which was held at chennai"
 },
 {
+    id:109,
     image:{
         
         data:"https://e7.pngegg.com/pngimages/76/991/png-clipart-silhouette-of-people-dancing-silhouette-celebrate-carnival-holidays-text-thumbnail.png",
@@ -116,6 +121,7 @@ contentType:"image/png"
             description:"This image was taken in the year 2023 during the occassion of annual sports event which was held at chennai"
 },
 {
+    id:110,
     image:{
         
         data:"https://www.hindugirlscollege.com/wp-content/uploads/2021/10/Founders-Day.png",
@@ -126,6 +132,7 @@ contentType:"image/png"
             description:"This image was taken in the year 2023 during the occassion of annual sports event which was held at chennai"
 },
 {
+    id:111,
     image:{
         
         data:"https://w7.pngwing.com/pngs/853/610/png-transparent-christmas-and-holiday-season-merry-christmas-food-holidays-decor-thumbnail.png",
@@ -137,6 +144,7 @@ contentType:"image/png"
 
 },
 {
+    id:112,
     image:{
         
         data:"https://img.lovepik.com/element/45000/9387.png_860.png",
@@ -147,46 +155,59 @@ contentType:"image/png"
             description:"This image was taken in the year 2023 during the occassion of annual sports event which was held at chennai"
 },
 ]
-}
+
 router.get('/',(req,res)=>{
-    res.send(image);
+    res.send(gallerypage);
 })
 
-
-
-router.get('/:id',(req,res)=>{
-    upload(req,res,(err)=>{
-        if(err){
-            console.log(err)
+router.get("/:id", (req, res) => {
+    try {
+        const individualImage = gallerypage.find(
+          (c) => c.id === Number(req.params.id)
+        );
+        if (individualImage) {
+            res.json(individualImage);
+          } else {
+            res.status(404).json({ message: "Not found" });
+          }
+        } catch (error) {
+          res.json({ message: 505 });
         }
-        else{
-           Gallery.findById({_id:req.params.id},{
-           
-                image:{
-                    data:req.file.filename,
-                    contentType:'image/png'
-                },
-                day:req.body.day,
-                name:req.body.name,
-                description:req.body.description,
-            })
+    });
+
+// router.get('/:id',(req,res)=>{
+//     upload(req,res,(err)=>{
+//         if(err){
+//             console.log(err)
+//         }
+//         else{
+//            Gallery.findById({_id:req.params.id},{
+                
+//                 image:{
+//                     data:req.file.filename,
+//                     contentType:'image/png'
+//                 },
+//                 day:req.body.day,
+//                 name:req.body.name,
+//                 description:req.body.description,
+//             })
           
-            .then(result=>{
-                res.status(200).json({
-                   images:result
-                })
-            })
-            .catch(err=> {
-            console.log(err);
-            res.status(505).json({
-                error:err
-            })
-            }
-          )
-        }
-    })
+//             .then(result=>{
+//                 res.status(200).json({
+//                    images:result
+//                 })
+//             })
+//             .catch(err=> {
+//             console.log(err);
+//             res.status(505).json({
+//                 error:err
+//             })
+//             }
+//           )
+//         }
+//     })
     
-})
+// })
 
 router.post('/',(req,res)=>{
     upload(req,res,(err)=>{
@@ -217,7 +238,7 @@ router.put('/:id',(req,res)=>{
         }
         else{
           Gallery.findOneAndUpdate({_id:req.params.id},{
-             
+          
                 image:{
                     data:req.file.filename,
                     contentType:'image/png'
@@ -250,7 +271,7 @@ router.delete('/:id',(req,res)=>{
         }
         else{
            Gallery.deleteOne({_id:req.params.id},{
-            
+             
                 image:{
                     data:req.file.filename,
                     contentType:'image/png'
