@@ -25,8 +25,8 @@ const scheduleSchema=mongoose.Schema([{
 var Schedule=mongoose.model("Schedule",scheduleSchema);
 scheduleSchema.plugin(Schedule);
 
-const tomorrowSchedule=[
-  {
+const tomorrowSchedule={
+  Schedulelist:[{
   date:"10-06-2022",
   session:"09:30-10:15",
   lesson:"History",
@@ -57,7 +57,7 @@ const tomorrowSchedule=[
   unit:"unit-1"
  }
 ]
-
+}
 //tomorrow schedule------------------------------>
 router.get("/",(req,res)=>{
     try{

@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 const router = express.Router();
 const teachersSchema=mongoose.Schema(
     {
-        teacherslist:[{
+        
             image:{
                 data:String,
              contentType: String
@@ -18,7 +18,7 @@ const teachersSchema=mongoose.Schema(
          type:String,
         
      },
-    }]
+   
             
            
      })
@@ -102,34 +102,45 @@ contentType:"image/png"
 }
 
 
-router.get('/',(req,res) =>
-{
-    try{
-        res.status(200).send(teachers);
-    }
-    catch(error){
-        res.json({message:"not available"});
-    }
-});
+router.get('/',(req,res)=>{
+    res.send(teachers);
+})
+
 
 
 router.get('/:id',(req,res)=>{
-    console.log(req.params.id);
-   Teachers.findById(req.params.id)
+    upload(req,res,(err)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+            Teachers.findById({_id:req.params.id},{
+            image:{
+                data:req.file.filename,
+                contentType:'image/png'
+            },   
+            name:req.body.name,
+            id:req.body.id,
+               
+            })
+          
+            .then(result=>{
+                res.status(200).json({
+                    Teacherslist:result
+                })
+            })
+            .catch(err=> {
+            console.log(err);
+            res.status(505).json({
+                error:err
+            })
+            }
+          )
+        }
+    })
     
-    .then(result=>{
-        res.status(200).json({
-            teachers:result
-        })
-    })
-    .catch(err=> {
-    console.log(err);
-    res.status(505).json({
-        error:err
-    })
-    }
-  )
 })
+
 router.post('/',(req,res)=>{
     upload(req,res,(err)=>{
         if(err){
@@ -137,7 +148,12 @@ router.post('/',(req,res)=>{
         }
         else{
             const newImage = new Teachers({
-                teacherslist:req.body.teacherslist
+                image:{
+                    data:req.file.filename,
+                    contentType:'image/png'
+                },   
+                name:req.body.name,
+                id:req.body.id,
             })
             newImage.save()
         .then(()=>res.send('successfully uploaded')).catch(err=>console.log(err))
@@ -146,57 +162,75 @@ router.post('/',(req,res)=>{
     
 })
 router.put('/:id',(req,res)=>{
-    console.log(req.params.id);
-    Teachers.findOneAndUpdate({_id:req.params.id},{
-        $set:{
-           
-            teacherslist:req.body.teacherslist
-
+    upload(req,res,(err)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+            Teachers.findOneAndUpdate({_id:req.params.id},{
+                image:{
+                    data:req.file.filename,
+                    contentType:'image/png'
+                },   
+                name:req.body.name,
+                id:req.body.id,
+            })
+          
+            .then(result=>{
+                res.status(200).json({
+                    updated_Teacherslist:result       
+                 })
+            })
+            .catch(err=>{
+                console.log(err)
+                res.status(500).json({
+                    error:err
+                })
+            })
+        
         }
     })
-    .then(result=>{
-        res.status(200).json({
-            updated_teachers:result       
-         })
-    })
-    .catch(err=>{
-        console.log(err)
-        res.status(500).json({
-            error:err
-        })
-    })
-    })
-    router.delete('/:id',(req,res)=>{
-        console.log(req.params.id);
-        Teachers.deleteOne({_id:req.params.id},{
-            $set:{
-               
-                teacherslist:req.body.teacherslist
     
-            }
-        })
-        .then(result=>{
-            res.status(200).json({
-                deleted_teachers:result       
-             })
-        })
-        .catch(err=>{
+})
+router.delete('/:id',(req,res)=>{
+    upload(req,res,(err)=>{
+        if(err){
             console.log(err)
-            res.status(500).json({
-                error:err
+        }
+        else{
+            Teachers.deleteOne({_id:req.params.id},{
+                image:{
+                    data:req.file.filename,
+                    contentType:'image/png'
+                },   
+                name:req.body.name,
+                id:req.body.id,
             })
-        })
-        })
-       router.delete('/',(req,res)=>{
+          
+            .then(result=>{
+                res.status(200).json({
+                   deleted_Teacherslist:result       
+                 })
+            })
+            .catch(err=>{
+                console.log(err)
+                res.status(500).json({
+                    error:err
+                })
+            })
+        
+        }
+    })
+
     
-            Teachers.deleteMany({teachers},(err,result)=>{
-            if(err) throw err
-            res.send(teachers)
-            })
-        })
-        export default router;
-// const port=3000;
-// app.listen(port,()=>{
-//     console.log(`server is running at ${port}`);
-//     console.log(teachers);
-// });
+})
+
+
+router.delete("/",async(req,res)=>{
+    Teachers.deleteMany({}).then((result) => {
+             res.send(result);
+         })
+     });
+    
+
+export default router;

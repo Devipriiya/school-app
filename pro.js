@@ -1,9 +1,25 @@
 import express from "express";
 import mongoose from "mongoose";
+import multer from "multer";
 // import connectDB from "./db.js";
 mongoose.set("strictQuery", false);
 // connectDB();
 const router=express.Router();
+
+const Storage = multer.diskStorage({
+    destination: './upload/images',
+    filename: (req, file, cb) => {
+     cb(null,file.originalname);
+    },
+});
+
+const upload = multer({
+    storage: Storage,
+   
+}).single('testImage')
+// connectDB();
+const app=express();
+app.use(express.json());
 const AddressSchema = mongoose.Schema({
     houseNumber: {
         type:String,
@@ -68,13 +84,14 @@ const profileSchema=mongoose.Schema([{
 }])
 var Profile = mongoose.model('Profile',profileSchema);
 profileSchema.plugin(Profile);
-const profile=[{
+const profile={
+    profilelist:[{
     image:{
         data:"C:\\Users\\Dell\\OneDrive\\Desktop\\otp-main\\student\\profile\\profile\\1K2A0787.png",
         contentType:"image/png",
     },
     Name     :"Harish",
-    RollNo   :"610818106010",
+    RollNo   :"6108181060",
     ContactNo:"9448983789",
     class    :"8th",
     section  :"A",
@@ -112,100 +129,25 @@ const profile=[{
  }
 
 }]
+}
 // app.use(express.json());
-router.get("/",(req,res)=>{
-    try{
-        res.status(200).send(profile);
-    }catch(error)
-    {
-        res.json({message:"unable to create"});
-
-    }
-
-});
-// specific data
-router.get("/:id",(req,res)=>{
-  console.log(req.params.id);
-  Profile.findById(req.params.id)
-  
-  .then(result=>{
-      res.status(200).json({
-          profile:result
-      })
-  })
-  .catch(err=> {
-  console.log(err);
-  res.status(505).json({
-      error:err
-  })
-  }
-)
+router.get('/',(req,res)=>{
+    res.send(profile);
 })
-//post
-router.post("/",async(req,res)=>{
-    try{
-      const profile={
-        image:req.body.image,
-        Name     :req.body.Name,
-        RollNo   :req.body.RollNo,
-        ContactNo:req.body.ContactNo,
-        class    :req.body.class,
-        section  :req.body.section,
-        BloodGroup:req.body.BloodGroup,
-        FatherName:req.body.FatherName,
-        Email     :req.body.Email,
-        Address   :req.body.Address
-      }
-      console.log(profile);
-      const menu=new Profile(profile);
-      const profileCreated=await menu.save();
-      if(profileCreated){
-        console.log("Created");
-        res.status(201).json({message:"Profile available"});
-    }else
-    {
-        res.status(401);
-        throw new Error("not available");
-    }
-  } catch (err){
-          return res.status(500).json({message: err.message});
-        }});
- //update
- router.put('/:id',(req,res)=>{
-  console.log(req.params.id);
-  Profile.findOneAndUpdate({_id:req.params.id},{
-      $set:{
-        image:req.body.image,
-        Name     :req.body.Name,
-        RollNo   :req.body.RollNo,
-        ContactNo:req.body.ContactNo,
-        class    :req.body.class,
-        section  :req.body.section,
-        BloodGroup:req.body.BloodGroup,
-        FatherName:req.body.FatherName,
-        Email     :req.body.Email,
-        Address   :req.body.Address
-      }
-  })
-  .then(result=>{
-      res.status(200).json({
-          updated_profileDetails:result       
-       })
-  })
-  .catch(err=>{
-      console.log(err)
-      res.status(500).json({
-          error:err
-      })
-  })
-  })      
-       
-  //delete
-  router.delete('/:id',(req,res)=>{
-    console.log(req.params.id);
-    Profile.deleteOne({_id:req.params.id},{
-        $set:{
-            image:req.body.image,
+
+
+
+router.get('/:id',(req,res)=>{
+    upload(req,res,(err)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+            Profile.findById({_id:req.params.id},{
+            image:{
+                data:req.file.filename,
+                contentType:'image/png'
+            },   
             Name     :req.body.Name,
             RollNo   :req.body.RollNo,
             ContactNo:req.body.ContactNo,
@@ -214,25 +156,161 @@ router.post("/",async(req,res)=>{
             BloodGroup:req.body.BloodGroup,
             FatherName:req.body.FatherName,
             Email     :req.body.Email,
-            Address   :req.body.Address
+            Address   :{
+            houseNumber:req.body.houseNumber,
+            street: req.body.street,
+            city:req.body.city,
+            State:req.body.State,
+            Pincode:req.body.Pincode,
+            }  
+            })
+          
+            .then(result=>{
+                res.status(200).json({
+                    profile:result
+                })
+            })
+            .catch(err=> {
+            console.log(err);
+            res.status(505).json({
+                error:err
+            })
+            }
+          )
         }
     })
-    .then(result=>{
-        res.status(200).json({
-            Deleted_profileDetails:result       
-         })
-    })
-    .catch(err=>{
-        console.log(err)
-        res.status(500).json({
-            error:err
-        })
-    })
-    })
-    router.delete("/",(req,res)=>{
     
-        Profile.deleteMany({}).then((result) => {
-            res.send(result);
-        })
-    });
+})
+//post
+router.post('/',(req,res)=>{
+    upload(req,res,(err)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+            const newImage = new Profile({
+                image:{
+                    data:req.file.filename,
+                    contentType:'image/png'
+                },   
+                Name     :req.body.Name,
+                RollNo   :req.body.RollNo,
+                ContactNo:req.body.ContactNo,
+                class    :req.body.class,
+                section  :req.body.section,
+                BloodGroup:req.body.BloodGroup,
+                FatherName:req.body.FatherName,
+                Email     :req.body.Email,
+                Address   :{
+                    houseNumber:req.body.houseNumber,
+                    street: req.body.street,
+                    city:req.body.city,
+                    State:req.body.State,
+                    Pincode:req.body.Pincode,
+                    }
+            })
+            newImage.save()
+        .then(()=>res.send('successfully uploaded')).catch(err=>console.log(err))
+        }
+    })
+    
+})
+router.put('/:id',(req,res)=>{
+    upload(req,res,(err)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+            Profile.findOneAndUpdate({_id:req.params.id},{
+                image:{
+                    data:req.file.filename,
+                    contentType:'image/png'
+                },   
+                Name     :req.body.Name,
+                RollNo   :req.body.RollNo,
+                ContactNo:req.body.ContactNo,
+                class    :req.body.class,
+                section  :req.body.section,
+                BloodGroup:req.body.BloodGroup,
+                FatherName:req.body.FatherName,
+                Email     :req.body.Email,
+                Address   :{
+                    houseNumber:req.body.houseNumber,
+                    street: req.body.street,
+                    city:req.body.city,
+                    State:req.body.State,
+                    Pincode:req.body.Pincode,
+                    }
+            })
+          
+            .then(result=>{
+                res.status(200).json({
+                    updated_profile:result       
+                 })
+            })
+            .catch(err=>{
+                console.log(err)
+                res.status(500).json({
+                    error:err
+                })
+            })
+        
+        }
+    })
+    
+})
+router.delete('/:id',(req,res)=>{
+    upload(req,res,(err)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+            Profile.deleteOne({_id:req.params.id},{
+                image:{
+                    data:req.file.filename,
+                    contentType:'image/png'
+                },   
+                Name     :req.body.Name,
+                RollNo   :req.body.RollNo,
+                ContactNo:req.body.ContactNo,
+                class    :req.body.class,
+                section  :req.body.section,
+                BloodGroup:req.body.BloodGroup,
+                FatherName:req.body.FatherName,
+                Email     :req.body.Email,
+                Address   :{
+                    houseNumber:req.body.houseNumber,
+                    street: req.body.street,
+                    city:req.body.city,
+                    State:req.body.State,
+                    Pincode:req.body.Pincode,
+                    }
+            })
+          
+            .then(result=>{
+                res.status(200).json({
+                   deleted_profile:result       
+                 })
+            })
+            .catch(err=>{
+                console.log(err)
+                res.status(500).json({
+                    error:err
+                })
+            })
+        
+        }
+    })
+
+    
+})
+
+
+router.delete("/",async(req,res)=>{
+    Profile.deleteMany({}).then((result) => {
+             res.send(result);
+         })
+     });
+    
+
 export default router;

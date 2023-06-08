@@ -1,8 +1,20 @@
 import express, { Router } from "express";
 import mongoose from "mongoose";
+import multer from "multer";
 const router=express.Router();
 const app=express();
 app.use(express.json());
+const Storage = multer.diskStorage({
+    destination: './upload/images',
+    filename: (req, file, cb) => {
+     cb(null,file.originalname);
+    },
+});
+
+const upload = multer({
+    storage: Storage,
+   
+}).single('testImage')
 mongoose.set("strictQuery", false);
 const homeworkSchema=mongoose.Schema([{
             monthAndYear:{
@@ -35,7 +47,8 @@ const homeworkSchema=mongoose.Schema([{
 
 const Homework=mongoose.model("Homework",homeworkSchema);
 homeworkSchema.plugin(Homework);
-const homework=[
+const homework={
+    homeworklist:[
         {
           monthAndYear          :"January",
           class                 :"1st Standard",
@@ -61,7 +74,7 @@ const homework=[
           status         :"pending"          
    }
 ]
-
+}
 
 //download
 
@@ -86,133 +99,127 @@ router.get("/",(req,res)=>{
 
 });
 // specific data
-router.get("/:id",(req,res)=>{
-    console.log(req.params.id);
-    Homework.findById(req.params.id)
-    
-    .then(result=>{
-        res.status(200).json({
-            homework:result
-        })
-    })
-    .catch(err=> {
-    console.log(err);
-    res.status(505).json({
-        error:err
-    })
-    }
-  )
-})
-router.post("/",async(req,res)=>{
-    try{
-     const Details={
-        
-            monthAndYear          :req.body.monthAndYear,
-            class                 :req.body.class,
-            subject               :req.body.subject,
-            dateOfHomework        :req.body.dateOfHomework,
-            dateOfSubmit          :req.body.dateOfSubmit,
-            status                :req.body.status          
-        
-            
-        };
-        console.log(Details);
-        const menu=new Homework(Details);
-const homeworkCreated=await menu.save();
-if(homeworkCreated){
-    console.log("created");
-res.status(201).json({message:"successfully created"});
-}
-else{
-    res.status(401);
-    throw new error("not found ");
-}
-}catch(err){
-    return res.status(500).json({message:err.message});
-}}
-);
-//update
-router.put('/:id',(req,res)=>{
-    console.log(req.params.id);
-    Homework.findOneAndUpdate({_id:req.params.id},{
-        $set:{
-           
-            monthAndYear          :req.body.monthAndYear,
-            class                 :req.body.class,
-            subject               :req.body.subject,
-            dateOfHomework        :req.body.dateOfHomework,
-            dateOfSubmit          :req.body.dateOfSubmit,
-            status                :req.body.status 
-            
+router.get('/:id',(req,res)=>{
+    upload(req,res,(err)=>{
+        if(err){
+            console.log(err)
         }
-    })
-    .then(result=>{
-        res.status(200).json({
-            updated_Details:result       
-         })
-    })
-    .catch(err=>{
-        console.log(err)
-        res.status(500).json({
-            error:err
-        })
-    })
-    })
-//delete
-router.delete('/:id',(req,res)=>{
-    console.log(req.params.id);
-    Homework.deleteOne({_id:req.params.id},{
-        $set:{
-           
-            monthAndYear          :req.body.monthAndYear,
-            class                 :req.body.class,
-            subject               :req.body.subject,
-            dateOfHomework        :req.body.dateOfHomework,
-            dateOfSubmit          :req.body.dateOfSubmit,
-            status                :req.body.status  
-
-        }
-    })
-    .then(result=>{
-        res.status(200).json({
-            deleted_Details:result       
-         })
-    })
-    .catch(err=>{
-        console.log(err)
-        res.status(500).json({
-            error:err
-        })
-    })
-    })
-
-// router.delete('/:id',(req,res)=>{
-//         console.log(req.params.id);
-//         Homework.findByIdAndRemove({_id:req.params.id},{
-//             $set:{
-               
-//                 homework:req.body.homework
-                
-//             }
-//         })
-//         .then(result=>{
-//             res.status(200).json({
-//                 Deleted_Details:result       
-//              })
-//         })
-//         .catch(err=>{
-//             console.log(err)
-//             res.status(500).json({
-//                 error:err
-//             })
-//         })
-//         })
-        router.delete("/",(req,res)=>{
-    
-            Homework.deleteMany({}).then((result) => {
-                res.send(result);
+        else{
+            Homework.findById({_id:req.params.id},{
+                monthAndYear          :req.body.monthAndYear,
+                class                 :req.body.class,
+                subject               :req.body.subject,
+                dateOfHomework        :req.body.dateOfHomework,
+                dateOfSubmit          :req.body.dateOfSubmit,
+                status                :req.body.status  
             })
-        });
+          
+            .then(result=>{
+                res.status(200).json({
+                   homework:result
+                })
+            })
+            .catch(err=> {
+            console.log(err);
+            res.status(505).json({
+                error:err
+            })
+            }
+          )
+        }
+    })
     
+})
+router.post('/',(req,res)=>{
+    upload(req,res,(err)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+            const newImage = new Homework({
+                monthAndYear          :req.body.monthAndYear,
+                class                 :req.body.class,
+                subject               :req.body.subject,
+                dateOfHomework        :req.body.dateOfHomework,
+                dateOfSubmit          :req.body.dateOfSubmit,
+                status                :req.body.status  
+            })
+            newImage.save()
+        .then(()=>res.send('successfully uploaded')).catch(err=>console.log(err))
+        }
+    })
     
+})
+router.put('/:id',(req,res)=>{
+    upload(req,res,(err)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+            Homework.findOneAndUpdate({_id:req.params.id},{
+                monthAndYear          :req.body.monthAndYear,
+                class                 :req.body.class,
+                subject               :req.body.subject,
+                dateOfHomework        :req.body.dateOfHomework,
+                dateOfSubmit          :req.body.dateOfSubmit,
+                status                :req.body.status  
+            })
+          
+            .then(result=>{
+                res.status(200).json({
+                    updated_homework:result       
+                 })
+            })
+            .catch(err=>{
+                console.log(err)
+                res.status(500).json({
+                    error:err
+                })
+            })
+        
+        }
+    })
+    
+})
+router.delete('/:id',(req,res)=>{
+    upload(req,res,(err)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+            Homework.deleteOne({_id:req.params.id},{
+                monthAndYear          :req.body.monthAndYear,
+                class                 :req.body.class,
+                subject               :req.body.subject,
+                dateOfHomework        :req.body.dateOfHomework,
+                dateOfSubmit          :req.body.dateOfSubmit,
+                status                :req.body.status  
+            })
+          
+            .then(result=>{
+                res.status(200).json({
+                   deleted_homework:result       
+                 })
+            })
+            .catch(err=>{
+                console.log(err)
+                res.status(500).json({
+                    error:err
+                })
+            })
+        
+        }
+    })
+
+    
+})
+
+
+router.delete("/",async(req,res)=>{
+    Homework.deleteMany({}).then((result) => {
+             res.send(result);
+         })
+     });
+    
+
 export default router;

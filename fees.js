@@ -1,10 +1,22 @@
 import express from "express";
 // import connectDB from "./db.js";
 import mongoose from "mongoose";
+import multer from "multer";
 const router=express.Router();
 mongoose.set("strictQuery", false);
+const Storage = multer.diskStorage({
+    destination: './upload/images',
+    filename: (req, file, cb) => {
+     cb(null,file.originalname);
+    },
+});
+
+const upload = multer({
+    storage: Storage,
+   
+}).single('testImage')
 // connectDB();
-const feesSchema=mongoose.Schema([{
+const feesSchema=mongoose.Schema({
     fees:{
         type:String,
         required:true
@@ -25,13 +37,14 @@ const feesSchema=mongoose.Schema([{
         type:String,
         required:true
     },
-}])
+})
     
 
 const FeeDetails=mongoose.model("FeeDetails",feesSchema);
 feesSchema.plugin(FeeDetails);
 
-const feeDetails=[{
+const feeDetails={
+    feeslist:[{
         fees:"Admission Fee",
         totalFee:"Rs.500",
         paidFee:"Rs.100",
@@ -62,7 +75,9 @@ const feeDetails=[{
         lateFeeCharges:"Rs.00.00",
         dueFee :"Rs.400",
     
-}]
+}
+    ]
+}
      
 
 // app.use(express.json());
@@ -77,66 +92,72 @@ router.get("/",(req,res)=>{
 
 });
 // specific data
-router.get("/:id",(req,res)=>{
-    console.log(req.params.id);
-    Fee.findById(req.params.id)
-    
-    .then(result=>{
-        res.status(200).json({
-            feeDetails:result
-        })
-    })
-    .catch(err=> {
-    console.log(err);
-    res.status(505).json({
-        error:err
-    })
-    }
-  )
-})
-router.post("/",async(req,res)=>{
-    try{
-        const details=  {
-                 
-        fees:req.body.fees,
-        totalFee:req.body.totalFee,
-        paidFee:req.body.paidFee,
-        lateFeeCharges:req.body.lateFeeCharges,
-        dueFee : req.body.dueFee
-               }
-               
-            
-console.log(details);
- const fees=new FeeDetails(details);
-const feeDetailsCreated=await fees.save();
-if(feeDetailsCreated){
-    console.log("created");
-res.status(201).json({message:"successfully created"});
-}
-else{
-    res.status(401);
-    throw new error("not found ");
-}
-}catch(err){
-    return res.status(500).json({message:err.message});
-}}
-);
-//update
-router.put('/:id',(req,res)=>{
-    console.log(req.params.id);
-    FeeDetails.findOneAndUpdate({_id:req.params.id},{
-        $set:{
-            fees:req.body.fees,
-        totalFee:req.body.totalFee,
-        paidFee:req.body.paidFee,
-        lateFeeCharges:req.body.lateFeeCharges,
-        dueFee : req.body.dueFee
+router.get('/:id',(req,res)=>{
+    upload(req,res,(err)=>{
+        if(err){
+            console.log(err)
         }
-            
+        else{
+            FeeDetails.findById({_id:req.params.id},{
+                fees:req.body.fees,
+                totalFee:req.body.totalFee,
+                paidFee:req.body.paidFee,
+                lateFeeCharges:req.body.lateFeeCharges,
+                dueFee : req.body.dueFee
             })
+          
             .then(result=>{
                 res.status(200).json({
-                    updated_feeDetails:result       
+                    feesdetails:result
+                })
+            })
+            .catch(err=> {
+            console.log(err);
+            res.status(505).json({
+                error:err
+            })
+            }
+          )
+        }
+    })
+    
+})
+router.post('/',(req,res)=>{
+    upload(req,res,(err)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+            const newImage = new FeeDetails({
+                fees:req.body.fees,
+                totalFee:req.body.totalFee,
+                paidFee:req.body.paidFee,
+                lateFeeCharges:req.body.lateFeeCharges,
+                dueFee : req.body.dueFee
+            })
+            newImage.save()
+        .then(()=>res.send('successfully uploaded')).catch(err=>console.log(err))
+        }
+    })
+    
+})
+router.put('/:id',(req,res)=>{
+    upload(req,res,(err)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+            FeeDetails.findOneAndUpdate({_id:req.params.id},{
+                fees:req.body.fees,
+                totalFee:req.body.totalFee,
+                paidFee:req.body.paidFee,
+                lateFeeCharges:req.body.lateFeeCharges,
+                dueFee : req.body.dueFee,
+            })
+          
+            .then(result=>{
+                res.status(200).json({
+                    updated_feesdetails:result       
                  })
             })
             .catch(err=>{
@@ -145,38 +166,54 @@ router.put('/:id',(req,res)=>{
                     error:err
                 })
             })
+        
+        }
     })
-
-    //delete
-    router.delete('/:id',(req,res)=>{
-        console.log(req.params.id);
-        FeeDetails.deleteOne({_id:req.params.id},{
-            $set:{
+    
+})
+router.delete('/:id',(req,res)=>{
+    upload(req,res,(err)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+            FeeDetails.deleteOne({_id:req.params.id},{
                 fees:req.body.fees,
                 totalFee:req.body.totalFee,
                 paidFee:req.body.paidFee,
                 lateFeeCharges:req.body.lateFeeCharges,
                 dueFee : req.body.dueFee
-                
-            }
-        })
-        .then(result=>{
-            res.status(200).json({
-                Deleted_feeDetails:result       
-             })
-        })
-        .catch(err=>{
-            console.log(err)
-            res.status(500).json({
-                error:err
             })
-        })
-        })
-        router.delete("/",(req,res)=>{
-    
-            FeeDetails.deleteMany({}).then((result) => {
-                    res.send(result);
+          
+            .then(result=>{
+                res.status(200).json({
+                   deleted_feesdetails:result       
+                 })
+            })
+            .catch(err=>{
+                console.log(err)
+                res.status(500).json({
+                    error:err
                 })
-            });
+            })
+        
+        }
+    })
 
-export default router;       
+    
+})
+
+
+router.delete("/",async(req,res)=>{
+    FeeDetails.deleteMany({}).then((result) => {
+             res.send(result);
+         })
+     });
+    
+
+export default router;
+// const port=4000;
+// app.listen(port,()=>{
+//     console.log(`server is running at ${port}`);
+//     console.log(ninth);
+// });

@@ -21,7 +21,8 @@ const todayclassSchema=mongoose.Schema([  {
   var Todayclass=mongoose.model("Todayclass",todayclassSchema);
   todayclassSchema.plugin(Todayclass);
   
-  const todayclass=[
+  const todayclass={
+  todayclasslist:[
       {
         subject:"Tamil",
         lesson:"unit-3",
@@ -48,6 +49,7 @@ const todayclassSchema=mongoose.Schema([  {
           range:"completed"
         },
   ]
+}
 
   //todayclass-------------------->
 router.get("/",(req,res)=>{

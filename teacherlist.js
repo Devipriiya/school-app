@@ -1,26 +1,37 @@
-import express from "express";
-import mongoose from "mongoose";
+import express from 'express';
+
+const app = express();
 import multer from "multer";
-// import connectDB from "./db.js";
-mongoose.set("strictQuery", false);
+import path from "path";
 // connectDB();
-const router=express.Router();
-const teacherslistSchema=mongoose.Schema([{
-    image:{
-        data:String,
-        contentType: String
-    },
-     name:{
-        type:String,
-        required:true
-       },
-   subject:{
-        type:String,
-        required:true
-       }
-}])
-const Teacherslist = mongoose.model('Teacherslist',teacherslistSchema);
+
+const router =express.Router();
+
+import mongoose from "mongoose"
+// import connectDB from './appdb.js';
+const teacherslistSchema=mongoose.Schema(
+    {
+
+   
+image:{
+    data:String,
+    contentType: String
+},
+name:{
+    type:String,
+   required:true,
+},
+     
+subject:{
+    type:String,
+   required:true,
+},
+           
+     })
+
+const Teacherslist =mongoose.model("Teacherslist",teacherslistSchema);
 teacherslistSchema.plugin(Teacherslist);
+
 
 const Storage = multer.diskStorage({
     destination: './upload/images',
@@ -28,157 +39,191 @@ const Storage = multer.diskStorage({
      cb(null,file.originalname);
     },
 });
-const teacherslist=[{
-    image:{
-        data:"C:\Users\DELL\Desktop\school management\profile\IMG_1234.jpg",
-contentType:"image/png"
-    },
-    name:"Gowrishankar",
-    subject:"English"
-},
-{
-    image:{
-        data:"C:\Users\DELL\Desktop\school management\profile\IMG_3901.JPG",
-contentType:"image/png"
-    },
-    name:"Megha",
-    subject:"Maths"
-},
-{
-    image:{
-        data:"C:\Users\DELL\Desktop\school management\profile\IMG_4042.JPG",
-contentType:"image/png"
-    },
-    name:"Nivesh",
-    subject:"Science"
-},
-{
-    image:{
-        data:"C:\Users\DELL\Desktop\school management\profile\IMG_4050.JPG",
-contentType:"image/png"
-    },
-    name:"Aswini",
-    subject:"Social"
-},
-{
-    image:{
-        data:"C:\Users\DELL\Desktop\school management\profile\IMG_4073.png",
-contentType:"image/png"
-    },
-    name:"Harishanakaran",
-    subject:"Tamil"
-}]
-//get
-// app.use(express.json());
-router.get("/",(req,res)=>{
-    try{
-        res.status(200).send(teacherslist);
-    }catch(error)
-    {
-        res.json({message:"unable to create"});
 
-    }
-
-});
-// specific data
-router.get("/:id",(req,res)=>{
-  console.log(req.params.id);
-  Teacherslist.findById(req.params.id)
-  
-  .then(result=>{
-      res.status(200).json({
-          Teachers:result
-      })
-  })
-  .catch(err=> {
-  console.log(err);
-  res.status(505).json({
-      error:err
-  })
-  }
-)
-});
-//post
-router.post("/",async(req,res)=>{
-    try{
-      const teachers={
-        image:{
-            data:req.file.filename,
-            contentType:'image/png'
-        },
-        name:req.body.name,
-       subject:req.body.subject
-      };
-      console.log(teachers);
-      const menu=new Teacherslist(teachers);
-      const teachersCreated=await menu.save();
-      if(teachersCreated){
-        console.log("Created");
-        res.status(201).json({message:"Profile available"});
-    }else
+const upload = multer({
+    storage: Storage,
+   
+}).single('testImage')
+const teacherslist={
+teachers:[
     {
-        res.status(401);
-        throw new Error("not available");
-    }
-  } catch (err){
-          return res.status(500).json({message: err.message});
-        }});
-//update
-router.put('/:id',(req,res)=>{
-  console.log(req.params.id);
-  Teacherslist.findOneAndUpdate({_id:req.params.id},{
-      $set:{
         image:{
-            data:req.file.filename,
-            contentType:'image/png'
+            data:"C:\Users\DELL\Desktop\school management\profile\IMG_1234.jpg",
+    contentType:"image/png"
         },
-        name:req.body.name,
-        subject:req.body.subject
-      }
-  })
-  .then(result=>{
-      res.status(200).json({
-          updated_teachersDetails:result       
-       })
-  })
-  .catch(err=>{
-      console.log(err)
-      res.status(500).json({
-          error:err
-      })
-  })
-  })      
-       
-  //delete
-  router.delete('/:id',(req,res)=>{
-    console.log(req.params.id);
-    Teacherslist.deleteOne({_id:req.params.id},{
-        $set:{
+        name:"Gowrishankar",
+        subject:"For Tamil"
+    },
+    {
+        image:{
+            data:"C:\Users\DELL\Desktop\school management\profile\IMG_3901.JPG",
+    contentType:"image/png"
+        },
+        name:"Megha",
+        subject:"For English"
+    },
+    {
+        image:{
+            data:"C:\Users\DELL\Desktop\school management\profile\IMG_4042.JPG",
+    contentType:"image/png"
+        },
+        name:"Nivesh",
+        subject:"For Maths"
+    },
+    {
+        image:{
+            data:"C:\Users\DELL\Desktop\school management\profile\IMG_4050.JPG",
+    contentType:"image/png"
+        },
+        name:"Aswini",
+        subject:"For Science"
+    }, 
+    
+    {
+        image:{
+            data:"C:\Users\DELL\Desktop\school management\profile\IMG_4073.png",
+    contentType:"image/png"
+        },
+        name:"Hari Shankaran",
+        rollno:"For Social"
+    },
+    
+]
+}
+router.get('/',(req,res)=>{
+    res.send(teacherslist);
+})
+
+
+
+router.get('/:id',(req,res)=>{
+    upload(req,res,(err)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+            Teacherslist.findById({_id:req.params.id},{
             image:{
                 data:req.file.filename,
                 contentType:'image/png'
-            },
+            },   
             name:req.body.name,
-            subject:req.body.subject
+            subject:req.body.subject,
+               
+            })
+          
+            .then(result=>{
+                res.status(200).json({
+                    Teacherslist:result
+                })
+            })
+            .catch(err=> {
+            console.log(err);
+            res.status(505).json({
+                error:err
+            })
+            }
+          )
         }
     })
-    .then(result=>{
-        res.status(200).json({
-            Deleted_teachersDetails:result       
-         })
-    })
-    .catch(err=>{
-        console.log(err)
-        res.status(500).json({
-            error:err
-        })
-    })
-    })
-    router.delete("/",(req,res)=>{
     
-        Teacherslist.deleteMany({}).then((result) => {
-            res.send(result);
-        })
-    });
+})
+
+router.post('/',(req,res)=>{
+    upload(req,res,(err)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+            const newImage = new Teacherslist({
+                image:{
+                    data:req.file.filename,
+                    contentType:'image/png'
+                },   
+                name:req.body.name,
+                subject:req.body.subject,
+            })
+            newImage.save()
+        .then(()=>res.send('successfully uploaded')).catch(err=>console.log(err))
+        }
+    })
+    
+})
+router.put('/:id',(req,res)=>{
+    upload(req,res,(err)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+            Teacherslist.findOneAndUpdate({_id:req.params.id},{
+                image:{
+                    data:req.file.filename,
+                    contentType:'image/png'
+                },   
+                name:req.body.name,
+                subject:req.body.subject,
+            })
+          
+            .then(result=>{
+                res.status(200).json({
+                    updated_Teacherslist:result       
+                 })
+            })
+            .catch(err=>{
+                console.log(err)
+                res.status(500).json({
+                    error:err
+                })
+            })
+        
+        }
+    })
+    
+})
+router.delete('/:id',(req,res)=>{
+    upload(req,res,(err)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+            Teacherslist.deleteOne({_id:req.params.id},{
+                image:{
+                    data:req.file.filename,
+                    contentType:'image/png'
+                },   
+                name:req.body.name,
+                subject:req.body.subject,
+            })
+          
+            .then(result=>{
+                res.status(200).json({
+                   deleted_Teacherslist:result       
+                 })
+            })
+            .catch(err=>{
+                console.log(err)
+                res.status(500).json({
+                    error:err
+                })
+            })
+        
+        }
+    })
+
+    
+})
+
+
+router.delete("/",async(req,res)=>{
+    Teacherslist.deleteMany({}).then((result) => {
+             res.send(result);
+         })
+     });
+    
 
 export default router;
+// const port=4000;
+// app.listen(port,()=>{
+//     console.log(`server is running at ${port}`);
+//     console.log(ninth);
+// });

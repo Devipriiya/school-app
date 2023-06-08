@@ -16,12 +16,12 @@ const remarkSchema=mongoose.Schema([{
 const Remark=mongoose.model("Remark",remarkSchema);
 remarkSchema.plugin(Remark);
 
-const remark=[
-     {
+const remark={
+   remarkslist:[{
        attitude :"He is an enthusiastic learner who seems to enjoy school"
         
-     }
-    ]
+     }]
+}
 
 // app.use(express.json());
 router.get("/",(req,res)=>{

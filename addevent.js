@@ -99,7 +99,7 @@ router.post('/',(req,res)=>{
             console.log(err)
         }
         else{
-            const newFile = new   Addevent({
+            const newFile = new Addevent({
                 eventName:req.body.eventName,
                 selectEvent:req.body.selectEvent,
                 date:req.body.date,

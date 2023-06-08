@@ -22,7 +22,8 @@ const assignmentSchema=mongoose.Schema([
   var Assignment=mongoose.model("Assignment",assignmentSchema);
   assignmentSchema.plugin(Assignment);
   
-  const assignment=[
+  const assignment={
+    assignmentlist:[
       {
           subject:"Tamil",
           lesson:"unit-3",
@@ -49,6 +50,7 @@ const assignmentSchema=mongoose.Schema([
             assignment:"Ex:15"
           },
   ]
+}
 
   //assignment-------------------------------->
 router.get("/",(req,res)=>{

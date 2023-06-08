@@ -1,10 +1,21 @@
 import express from "express";
 import mongoose from "mongoose";
 const router=express.Router();
-
+import multer from "multer";
 mongoose.set("strictQuery", false);
+const Storage = multer.diskStorage({
+    destination: './upload/images',
+    filename: (req, file, cb) => {
+     cb(null,file.originalname);
+    },
+});
+
+const upload = multer({
+    storage: Storage,
+   
+}).single('testImage')
 const parentattendanceSchema=mongoose.Schema( {
-    attendanceFile:[{
+
             totalWorkingDays:{
                 type:String,
                 required:true
@@ -31,13 +42,13 @@ const parentattendanceSchema=mongoose.Schema( {
                     required:true
                 },
     }]
-               }]
+             
             })
 
 const Parentattendance=mongoose.model("Parentattendance",parentattendanceSchema);
 parentattendanceSchema.plugin(Parentattendance);
 const attendanceFile={
-    attendanceFile:[{
+  
               totalWorkingDays:"100",
               attendedDays:"74",
               absentDays:"3",
@@ -45,139 +56,150 @@ const attendanceFile={
                 monthAndYear:"June 2022",
                 totalDays:"26 Days",
                 officialLeaves:"6 Days"
-              }]
-         },
-          {
-            totalWorkingDays:"100",
-            attendedDays:"74",
-            absentDays:"3",
-            schedule:[{
+              },
+            {
               monthAndYear:"June 2022",
               totalDays:"26 Days",
               officialLeaves:"6 Days"
             }]
-        },
-       {
-             totalWorkingDays:"100",
-             attendedDays:"74",
-             absentDays:"3",
-             schedule:[{
-                 monthAndYear:"June 2022",
-                 totalDays:"26 Days",
-                 officialLeaves:"6 Days"
-            }]
-   }]
-                }
+        }
 
 
 // app.use(express.json());
-router.get("/",(req,res)=>{
-    try{
-        res.status(200).send(attendanceFile);
-    }catch(error)
-    {
-        res.json({message:"unable to create"});
-
-    }
-
-});
-// specific data
-router.get("/:id",(req,res)=>{
-    console.log(req.params.id);
-    Parentattendance.findById(req.params.id)
-    
-    .then(result=>{
-        res.status(200).json({
-            attendanceFile:result
-        })
-    })
-    .catch(err=> {
-    console.log(err);
-    res.status(505).json({
-        error:err
-    })
-    }
-  )
+router.get('/',(req,res)=>{
+    res.send(attendanceFile);
 })
-router.post("/",async(req,res)=>{
-    try{
-        const Details={
-            totalWorkingDays:req.body.totalWorkingDays,
-            attendedDays:req.body.attendedDays,
-            absentDays:req.body.absentDays,
-            schedule:req.body.schedule
-
-        };
-        console.log(Details);
-        const menu=new Parentattendance(Details);
-const attendanceCreated=await menu.save();
-if(attendanceCreated){
-    console.log("created");
-res.status(201).json({message:"successfully created"});
-}
-else{
-    res.status(401);
-    throw new error("not found ");
-}
-}catch(err){
-    return res.status(500).json({message:err.message});
-}}
-);
-//update
-router.put('/:id',(req,res)=>{
-    console.log(req.params.id);
-    Parentattendance.findOneAndUpdate({_id:req.params.id},{
-        $set:{
-           
-            totalWorkingDays:req.body.totalWorkingDays,
-            attendedDays:req.body.attendedDays,
-            absentDays:req.body.absentDays,
-            schedule:req.body.schedule
-            
+// specific data
+router.get('/:id',(req,res)=>{
+    upload(req,res,(err)=>{
+        if(err){
+            console.log(err)
         }
-    })
-    .then(result=>{
-        res.status(200).json({
-            updated_Details:result       
-         })
-    })
-    .catch(err=>{
-        console.log(err)
-        res.status(500).json({
-            error:err
-        })
-    })
-    })
-  //delete
-    router.delete('/:id',(req,res)=>{
-        console.log(req.params.id);
-        Parentattendance.deleteOne({_id:req.params.id},{
-            $set:{
-               
-              
+        else{
+            Parentattendance.findById({_id:req.params.id},{
+
                 totalWorkingDays:req.body.totalWorkingDays,
                 attendedDays:req.body.attendedDays,
                 absentDays:req.body.absentDays,
-                schedule:req.body.schedule
-                
-            }
-        })
-        .then(result=>{
-            res.status(200).json({
-                Deleted_Details:result       
-             })
-        })
-        .catch(err=>{
-            console.log(err)
-            res.status(500).json({
+                schedule:{
+                    monthAndYear:req.body.monthAndYear,
+                    totalDays:req.body.totalDays,
+                    officialLeaves:req.body.officialLeaves
+                }
+            })
+          
+            .then(result=>{
+                res.status(200).json({
+                    parentattendance:result
+                })
+            })
+            .catch(err=> {
+            console.log(err);
+            res.status(505).json({
                 error:err
             })
-        })
-        })
-        router.delete("/",(req,res)=>{
+            }
+          )
+        }
+    })
     
-            Parentattendance.deleteMany({}).then((result) => {
-                res.send(result);
+})
+router.post('/',(req,res)=>{
+    upload(req,res,(err)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+            const newImage = new Parentattendance({
+                totalWorkingDays:req.body.totalWorkingDays,
+                attendedDays:req.body.attendedDays,
+                absentDays:req.body.absentDays,
+                schedule:{
+                    monthAndYear:req.body.monthAndYear,
+                    totalDays:req.body.totalDays,
+                    officialLeaves:req.body.officialLeaves
+                }
             })
-        });
-        export default router;
+            newImage.save()
+        .then(()=>res.send('successfully uploaded')).catch(err=>console.log(err))
+        }
+    })
+    
+})
+//update
+router.put('/:id',(req,res)=>{
+    upload(req,res,(err)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+          Parentattendance.findOneAndUpdate({_id:req.params.id},{
+            totalWorkingDays:req.body.totalWorkingDays,
+            attendedDays:req.body.attendedDays,
+            absentDays:req.body.absentDays,
+            schedule:{
+                monthAndYear:req.body.monthAndYear,
+                totalDays:req.body.totalDays,
+                officialLeaves:req.body.officialLeaves
+            }
+            })
+          
+            .then(result=>{
+                res.status(200).json({
+                    updated_parentattendance:result       
+                 })
+            })
+            .catch(err=>{
+                console.log(err)
+                res.status(500).json({
+                    error:err
+                })
+            })
+        
+        }
+    })
+    
+})
+router.delete('/:id',(req,res)=>{
+    upload(req,res,(err)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+           Parentattendance.deleteOne({_id:req.params.id},{
+             
+            totalWorkingDays:req.body.totalWorkingDays,
+            attendedDays:req.body.attendedDays,
+            absentDays:req.body.absentDays,
+            schedule:{
+                monthAndYear:req.body.monthAndYear,
+                totalDays:req.body.totalDays,
+                officialLeaves:req.body.officialLeaves
+            }
+            })
+          
+            .then(result=>{
+                res.status(200).json({
+                   deleted_parentattendance:result       
+                 })
+            })
+            .catch(err=>{
+                console.log(err)
+                res.status(500).json({
+                    error:err
+                })
+            })
+        
+        }
+    })
+
+    
+})
+
+router.delete('/',async(req,res)=>{
+   Parentattendance.deleteMany({}).then((result) => {
+             res.send(result);
+         })
+     });
+export default router;
+

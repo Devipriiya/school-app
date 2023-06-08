@@ -42,7 +42,8 @@ const subjectSchema=mongoose.Schema([
 const Subject=mongoose.model("Subject",subjectSchema);
 subjectSchema.plugin(Subject);
 
-const subjects=[
+const subjects={
+    subjectlist:[
      {
        subjectName   : "Tamil",
        subjectTeacher: "Mr.Damodaran",
@@ -214,6 +215,7 @@ const subjects=[
         
      },
 ]
+}
 //all data
 // app.use(express.json());
 router.get("/",(req,res)=>{
