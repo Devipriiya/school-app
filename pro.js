@@ -56,7 +56,7 @@ const profileSchema=mongoose.Schema([{
         type:String,
         required:true
     },
-    class:{
+    standard:{
         type:String,
         required:true
     },
@@ -93,7 +93,7 @@ const profile={
     Name     :"Harish",
     RollNo   :"6108181060",
     ContactNo:"9448983789",
-    class    :"8th",
+    standard :"8th Standard",
     section  :"A",
     BloodGroup:"B+",
     FatherName:"Arron",
@@ -129,7 +129,7 @@ router.get('/:id',(req,res)=>{
             Name     :req.body.Name,
             RollNo   :req.body.RollNo,
             ContactNo:req.body.ContactNo,
-            class    :req.body.class,
+            standard    :req.body.standard,
             section  :req.body.section,
             BloodGroup:req.body.BloodGroup,
             FatherName:req.body.FatherName,
@@ -174,7 +174,7 @@ router.post('/',(req,res)=>{
                 Name     :req.body.Name,
                 RollNo   :req.body.RollNo,
                 ContactNo:req.body.ContactNo,
-                class    :req.body.class,
+                standard    :req.body.standard,
                 section  :req.body.section,
                 BloodGroup:req.body.BloodGroup,
                 FatherName:req.body.FatherName,
@@ -207,7 +207,7 @@ router.put('/:id',(req,res)=>{
                 Name     :req.body.Name,
                 RollNo   :req.body.RollNo,
                 ContactNo:req.body.ContactNo,
-                class    :req.body.class,
+                standard    :req.body.standard,
                 section  :req.body.section,
                 BloodGroup:req.body.BloodGroup,
                 FatherName:req.body.FatherName,
@@ -251,7 +251,7 @@ router.delete('/:id',(req,res)=>{
                 Name     :req.body.Name,
                 RollNo   :req.body.RollNo,
                 ContactNo:req.body.ContactNo,
-                class    :req.body.class,
+                standard    :req.body.standard,
                 section  :req.body.section,
                 BloodGroup:req.body.BloodGroup,
                 FatherName:req.body.FatherName,

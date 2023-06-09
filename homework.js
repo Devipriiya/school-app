@@ -31,7 +31,7 @@ const homeworkSchema=mongoose.Schema({
                 type:String,
                 required:true
             },
-            class:{
+            standard :{
                 type:String,
                 required:true
             },
@@ -61,15 +61,15 @@ const homework={
     homeworklist:[
         {
           monthAndYear          :"January",
-          class                 :"1st Standard",
+          standard              :"1st Standard",
           subject               :"English",
           dateOfHomework        :"23-9-2022",
           dateOfSubmit          :"25-9-2022",
           status                :"pending"          
       },
       {
-        monthAndYear         :"February",
-        class          :"1st Standard",
+        monthAndYear   :"February",
+        standard       :"1st Standard",
         subject        :"English",
         dateOfHomework :"23-9-2022",
         dateOfSubmit   :"25-9-2022",
@@ -77,11 +77,11 @@ const homework={
     },
    {
          monthAndYear   :"March",
-         class          :"1st Standard",
+         standard       :"1st Standard",
          subject        :"English",
          dateOfHomework :"23-9-2022",
          dateOfSubmit   :"25-9-2022",
-          status         :"pending"          
+          status        :"pending"          
    }
 ]
 }
@@ -109,7 +109,7 @@ router.get('/:id',(req,res)=>{
         else{
             Homework.findById({_id:req.params.id},{
                 monthAndYear          :req.body.monthAndYear,
-                class                 :req.body.class,
+                standard              :req.body. standard ,
                 subject               :req.body.subject,
                 dateOfHomework        :req.body.dateOfHomework,
                 dateOfSubmit          :req.body.dateOfSubmit,
@@ -140,7 +140,7 @@ router.post('/',(req,res)=>{
         else{
             const newImage = new Homework({
                 monthAndYear          :req.body.monthAndYear,
-                class                 :req.body.class,
+                standard              :req.body.standard ,
                 subject               :req.body.subject,
                 dateOfHomework        :req.body.dateOfHomework,
                 dateOfSubmit          :req.body.dateOfSubmit,
@@ -160,7 +160,7 @@ router.put('/:id',(req,res)=>{
         else{
             Homework.findOneAndUpdate({_id:req.params.id},{
                 monthAndYear          :req.body.monthAndYear,
-                class                 :req.body.class,
+                standard              :req.body.standard ,
                 subject               :req.body.subject,
                 dateOfHomework        :req.body.dateOfHomework,
                 dateOfSubmit          :req.body.dateOfSubmit,
@@ -191,7 +191,7 @@ router.delete('/:id',(req,res)=>{
         else{
             Homework.deleteOne({_id:req.params.id},{
                 monthAndYear          :req.body.monthAndYear,
-                class                 :req.body.class,
+                standard              :req.body.standard ,
                 subject               :req.body.subject,
                 dateOfHomework        :req.body.dateOfHomework,
                 dateOfSubmit          :req.body.dateOfSubmit,
