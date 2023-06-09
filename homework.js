@@ -16,7 +16,17 @@ const upload = multer({
    
 }).single('testImage')
 mongoose.set("strictQuery", false);
-const homeworkSchema=mongoose.Schema([{
+app.set("view engine","ejs");
+
+app.use(express.static("public"));
+router.get('/data',(req,res)=>{
+res.render("data");
+})
+router.get('/download-file',(req,res)=>{
+    res.download("./book/homework.pdf");
+})
+const homeworkSchema=mongoose.Schema({
+
             monthAndYear:{
                 type:String,
                 required:true
@@ -41,7 +51,7 @@ const homeworkSchema=mongoose.Schema([{
                 type:String,
                 required:true
             }
-     }]
+        }
     
 )
 
@@ -78,15 +88,7 @@ const homework={
 
 //download
 
-app.set("view engine","ejs");
 
-app.use(express.static("public"));
-router.get('/data',(req,res)=>{
-res.render("data");
-})
-router.get('/download-file',(req,res)=>{
-    res.download("./book/Nodejs contents 1.pdf");
-})
 // app.use(express.json());
 router.get("/",(req,res)=>{
     try{

@@ -85,7 +85,7 @@ const profileSchema=mongoose.Schema([{
 var Profile = mongoose.model('Profile',profileSchema);
 profileSchema.plugin(Profile);
 const profile={
-    profilelist:[{
+  
     image:{
         data:"C:\\Users\\Dell\\OneDrive\\Desktop\\otp-main\\student\\profile\\profile\\1K2A0787.png",
         contentType:"image/png",
@@ -106,30 +106,8 @@ const profile={
         Pincode:"5600035"
      }
 
-},
-{
-    image:{
-        data:"C:\\Users\\Dell\\OneDrive\\Desktop\\otp-main\\student\\profile\\profile\\1K2A0872.png",
-        contentType:"image/png",
-    },
-     Name     :"Hemprasad",
-     RollNo   :"610818106010",
-     ContactNo:"9448983789",
-     class    :"8th",
-     section  :"A",
-     BloodGroup:"B+",
-    FatherName:"Arron",
-    Email     :"abc@gmail.com",
-    Address   :{
-          houseNumber:"G-36",
-          street: "1st cross",
-          city:"Chennai",
-          State:"TamilNadu",
-          Pincode:"5600035"
- }
-
-}]
 }
+
 // app.use(express.json());
 router.get('/',(req,res)=>{
     res.send(profile);

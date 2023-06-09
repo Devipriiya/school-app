@@ -85,7 +85,7 @@ teachers:[
     contentType:"image/png"
         },
         name:"Hari Shankaran",
-        rollno:"For Social"
+        subject:"For Social"
     },
     
 ]

@@ -40,6 +40,7 @@ import profilepage from "./pro.js";
 import remark from "./remark.js";
 import sports from "./sports.js";
 import teacherslist from "./teacherlist.js";
+import classperiod from "./classperiod.js";
  
 import addevent from "./addevent.js";
 import teacherassignment from "./teacherassignment.js";
@@ -98,6 +99,7 @@ app.use('/remark',remark);
 app.use('/sports',sports);
 app.use('/subject',subject);
 app.use('/teacherslist',teacherslist);
+app.use('/classperiod',classperiod);
 
 app.use('/addevent',addevent);
 app.use('/teacherassignment',teacherassignment);
