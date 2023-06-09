@@ -21,11 +21,13 @@ const upload = multer({
     storage: Storage,
    
 }).single('testImage')
-const imagelist=[{
+const imagelist=[
+ 
+    {
     id:1 ,
     image:{
         
-        data:"C:\Users\DELL\Desktop\school management\gallery\IMG_1.jpg",
+        data:"https://i.ibb.co/WFWjMT8/IMG-1.jpg",
         contentType:"image/png"
     },
 },
@@ -34,7 +36,7 @@ const imagelist=[{
       id:2,
         image:{
             
-            data:"C:\Users\DELL\Desktop\school management\gallery\IMG_2.jpg",
+            data:"https://i.ibb.co/Q60kc55/IMG-2.jpg",
             contentType:"image/png"
         
     } , 
@@ -43,7 +45,7 @@ const imagelist=[{
    id:3,
     image:{
         
-data:"C:\Users\DELL\Desktop\school management\gallery\IMG_3.jpg",
+data:"https://i.ibb.co/TH7sPfD/IMG-3.jpg",
 contentType:"image/png"
     }
 },
@@ -51,14 +53,14 @@ contentType:"image/png"
    id:4,
     image:{
         
-data:"C:\Users\DELL\Desktop\school management\gallery\IMG_4.jpg",
+data:"https://i.ibb.co/N1HwW8w/IMG-4.jpg",
 contentType:"image/png"
     }
 },{
    id:5,
     image:{
         
-        data:"C:\Users\DELL\Desktop\school management\gallery\WhatsApp Image 2023-02-24 at 11.39.33 AM (5).jpeg",
+        data:"https://i.ibb.co/bBkTNQj/Whats-App-Image-2023-02-24-at-11-39-33-AM-5.jpg",
         contentType:"image/png"
             } 
 },
@@ -66,7 +68,7 @@ contentType:"image/png"
    id:6,
     image:{
         
-        data:"C:\Users\DELL\Desktop\school management\gallery\WhatsApp Image 2023-02-24 at 11.39.33 AM (15).jpeg",
+        data:"https://i.ibb.co/mFcf5S9/Whats-App-Image-2023-02-24-at-11-39-33-AM-15.jpg",
         contentType:"image/png"
             } 
 },
@@ -74,7 +76,7 @@ contentType:"image/png"
    id:7,
     image:{
         
-        data:"C:\Users\DELL\Desktop\school management\gallery\WhatsApp Image 2023-02-24 at 11.39.33 AM (32).jpeg",
+        data:"https://i.ibb.co/w60b2Tm/Whats-App-Image-2023-02-24-at-11-39-33-AM-32.jpg",
         contentType:"image/png"
             } 
 },
@@ -90,7 +92,7 @@ contentType:"image/png"
    id:9,
     image:{
         
-        data:"C:\Users\DELL\Desktop\school management\events\WhatsApp Image 2023-02-24 at 11.39.33 AM (8).jpeg",
+        data:"https://i.ibb.co/txFD1yt/IMG-3982.jpg",
         contentType:"image/png"
             } 
 },
@@ -98,7 +100,7 @@ contentType:"image/png"
    id:10,
     image:{
         
-        data:"C:\Users\DELL\Desktop\school management\events\WhatsApp Image 2023-02-24 at 11.39.33 AM (11).jpeg",
+        data:"https://i.ibb.co/nwfjYx4/Whats-App-Image-2023-02-24-at-11-39-33-AM-8.jpg",
         contentType:"image/png"
             } 
 },
@@ -106,7 +108,7 @@ contentType:"image/png"
    id:11,
     image:{
         
-        data:"C:\Users\DELL\Desktop\school management\events\WhatsApp Image 2023-02-24 at 11.39.33 AM (12).jpeg",
+        data:"https://i.ibb.co/2dFknWn/Whats-App-Image-2023-02-24-at-11-39-33-AM-11.jpg",
         contentType:"image/png"
             } 
 },
@@ -114,7 +116,7 @@ contentType:"image/png"
    id:12,
     image:{
         
-        data:"C:\Users\DELL\Desktop\school management\events\WhatsApp Image 2023-02-24 at 11.39.33 AM (20).jpeg",
+        data:"https://i.ibb.co/hMszNhP/Whats-App-Image-2023-02-24-at-11-39-33-AM-12.jpg",
         contentType:"image/png"
             } 
 },
@@ -122,7 +124,7 @@ contentType:"image/png"
    id:13,
     image:{
         
-        data:"C:\Users\DELL\Desktop\school management\events\WhatsApp Image 2023-02-24 at 11.39.33 AM (28).jpeg",
+        data:"https://i.ibb.co/Vx2gVXV/Whats-App-Image-2023-02-24-at-11-39-33-AM-20.jpg",
         contentType:"image/png"
             } 
 },
@@ -130,12 +132,13 @@ contentType:"image/png"
    id:14,
     image:{
         
-        data:"C:\Users\DELL\Desktop\school management\events\WhatsApp Image 2023-02-24 at 11.39.33 AM (30).jpeg",
+        data:"https://i.ibb.co/sFxQXR8/Whats-App-Image-2023-02-24-at-11-39-33-AM-30.jpg",
         contentType:"image/png"
             } 
-},
-
+}
 ]
+
+
 
 router.get('/',(req,res)=>{
     res.send(imagelist);
@@ -143,7 +146,7 @@ router.get('/',(req,res)=>{
 
 router.get("/:id", (req, res) => {
     try {
-        const individualImage = imagelist.find(
+        const individualImage =imagelist.find(
           (c) => c.id === Number(req.params.id)
         );
         if (individualImage) {

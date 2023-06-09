@@ -210,26 +210,35 @@ router.get("/:id", (req, res) => {
 // })
 
 router.post('/',(req,res)=>{
+ 
+        const individualImage = gallerypage.find(
+          (c) => c.id === Number(req.params.id)
+        );
+        if (individualImage) {
+            res.json(individualImage);
+          } else {
+            res.status(404).json({ message: "Not found" });
+          }
     upload(req,res,(err)=>{
         if(err){
             console.log(err)
         }
         else{
             const newImage = new Gallery({
-            
-                image:{
-                    data:req.file.filename,
-                    contentType:'image/png'
-                },
-                day:req.body.day,
-                name:req.body.name,
-                description:req.body.description,
+               id:req.body.id
+                // image:{
+                //     data:req.file.filename,
+                //     contentType:'image/png'
+                // },
+                // day:req.body.day,
+                // name:req.body.name,
+                // description:req.body.description,
             })
             newImage.save()
         .then(()=>res.send('successfully uploaded')).catch(err=>console.log(err))
         }
     })
-    
+
 })
 router.put('/:id',(req,res)=>{
     upload(req,res,(err)=>{

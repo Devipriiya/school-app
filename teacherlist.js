@@ -48,7 +48,7 @@ const teacherslist={
 teachers:[
     {
         image:{
-            data:"C:\Users\DELL\Desktop\school management\profile\IMG_1234.jpg",
+            data:"https://i.ibb.co/CtqLGfZ/IMG-1234.jpg",
     contentType:"image/png"
         },
         name:"Gowrishankar",
@@ -56,7 +56,7 @@ teachers:[
     },
     {
         image:{
-            data:"C:\Users\DELL\Desktop\school management\profile\IMG_3901.JPG",
+            data:"https://i.ibb.co/6m0MJ5F/IMG-3901.jpg",
     contentType:"image/png"
         },
         name:"Megha",
@@ -64,7 +64,7 @@ teachers:[
     },
     {
         image:{
-            data:"C:\Users\DELL\Desktop\school management\profile\IMG_4042.JPG",
+            data:"https://i.ibb.co/F442Gpv/IMG-4042.jpg",
     contentType:"image/png"
         },
         name:"Nivesh",
@@ -72,7 +72,7 @@ teachers:[
     },
     {
         image:{
-            data:"C:\Users\DELL\Desktop\school management\profile\IMG_4050.JPG",
+            data:"https://i.ibb.co/T4cpxXj/IMG-4050.jpg",
     contentType:"image/png"
         },
         name:"Aswini",
@@ -81,7 +81,7 @@ teachers:[
     
     {
         image:{
-            data:"C:\Users\DELL\Desktop\school management\profile\IMG_4073.png",
+            data:"https://i.ibb.co/V9DgfQ3/IMG-4073.png",
     contentType:"image/png"
         },
         name:"Hari Shankaran",

@@ -50,7 +50,7 @@ const sportsSchema=mongoose.Schema([{
 const sports={
     sportslist:[{
         image:{
-            data:"C:\Users\Dell\OneDrive\Desktop\otp-main\student\sports\Sports\side-view-male-swimmers-swimming-pool.png",
+            data:"https://i.ibb.co/xDsKn52/side-view-male-swimmers-swimming-pool.jpg",
             contentType:"image/png",
         },
        events:"Upcomming Competitions",
@@ -61,7 +61,7 @@ const sports={
 },
 {
     image:{
-        data:"C:\Users\Dell\OneDrive\Desktop\otp-main\student\sports\Sports\basketball-players-big-professional-arena-during-game.png",
+        data:"https://i.ibb.co/Lxwnmsc/basketball-players-big-professional-arena-during-game.jpgg",
         contentType:"image/png",
     },
    events:"Upcomming Competitions",
@@ -73,7 +73,7 @@ const sports={
 
 {
     image:{
-        data:"C:\Users\DELL\Desktop\school management\sports\female-professional-volleyball-players-action-3d-stadium.jpg",
+        data:"https://i.ibb.co/12WhQMF/female-professional-volleyball-players-action-3d-stadium.jpg",
         contentType:"image/png",
     },
    events:"Upcomming Competitions",
@@ -84,7 +84,7 @@ const sports={
 },
 {
     image:{
-        data:"C:\Users\DELL\Desktop\school management\sports\three-white-shuttlecocks-badminton-racquet.jpg",
+        data:"https://i.ibb.co/72XdDc2/three-white-shuttlecocks-badminton-racquet.jpg",
         contentType:"image/png",
     },
    events:"Upcomming Competitions",

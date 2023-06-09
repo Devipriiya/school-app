@@ -24,7 +24,7 @@ const library={
 collections:[
     {
     image:{
-    data:"https://mlhshv2aawfz.i.optimole.com/w:600/h:600/q:mauto/f:avif310/https://mbabookstore.com/wp-content/uploads/2022/02/the-blue-book.png" , 
+    data:"https://d2uv8e5stiuj36.cloudfront.net/product-photos/book@2x.png" , 
     contentType:"image/png" 
     },
     bookname:"Bluebook",
@@ -33,7 +33,7 @@ collections:[
 },
 {
     image:{
-        data:"https://ramapublishinghouse.com/wp-content/uploads/2021/02/-1.png",
+        data:"https://is4-ssl.mzstatic.com/image/thumb/Publication62/v4/e7/7a/e2/e77ae2a6-c97d-345a-05e0-e6c3fc366def/9788822875204.jpg/1200x630wz.png",
         contentType:"image/png"
     },
     bookname:"planatation",

@@ -76,7 +76,7 @@ const user={
     email     :"abc@gmail.com",
     address   :"Chennai",
     image:{
-        data:"https://img.freepik.com/free-photo/front-view-young-beautiful-lady-red-t-shirt-black-jeans-holding-different-copybooks-files-smiling-with-bag-white_140725-18639.jpg?size=626&ext=jpg&ga=GA1.2.1712142773.1672033835&semt=ais",
+        data:"https://i.ibb.co/zHqXdsS/IMG-7890.jpg",
        contentType:"image/png"
     }
 

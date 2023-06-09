@@ -87,7 +87,7 @@ profileSchema.plugin(Profile);
 const profile={
   
     image:{
-        data:"C:\\Users\\Dell\\OneDrive\\Desktop\\otp-main\\student\\profile\\profile\\1K2A0787.png",
+        data:"https://i.ibb.co/zHqXdsS/IMG-7890.jpg",
         contentType:"image/png",
     },
     Name     :"Harish",

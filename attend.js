@@ -71,13 +71,13 @@ const user={
         attendance:"Present",
         total:"30",
         image:{
-            data:"https://w7.pngwing.com/pngs/241/840/png-transparent-computer-icons-student-school-student-angle-people-logo-thumbnail.png",
+            data:"https://i.ibb.co/zHqXdsS/IMG-7890.jpg",
             contentType:"image/png"
         },
     },
     {
         
-        name:"Shalini",
+        name:"Aswini",
         rollNo:"0002",
         standard:"10'th",
         section:"B",
@@ -85,7 +85,7 @@ const user={
         attendance:"Present",
         total:"30",
         image:{
-            data:"https://e7.pngegg.com/pngimages/1008/662/png-clipart-student-girl-school-girl-thinking-s-child-reading-thumbnail.png",
+            data:"https://i.ibb.co/T4cpxXj/IMG-4050.jpg",
             contentType:"image/png"
         },
     },
@@ -100,13 +100,13 @@ const user={
         attendance:"Absent",
         total:"30",
         image:{
-            data:"https://w7.pngwing.com/pngs/241/840/png-transparent-computer-icons-student-school-student-angle-people-logo-thumbnail.png",
+            data:"https://i.ibb.co/nD4Lgzv/IMG-4567.jpg",
             contentType:"image/png"
         },
     },
     {
         
-        name:"Devi",
+        name:"Gowrishankar",
         rollNo:"0004",
         standard:"10'th",
         section:"B",
@@ -114,7 +114,7 @@ const user={
         attendance:"Present",
         total:"30",
         image:{
-            data:"https://e7.pngegg.com/pngimages/1008/662/png-clipart-student-girl-school-girl-thinking-s-child-reading-thumbnail.png",
+            data:"https://i.ibb.co/CtqLGfZ/IMG-1234.jpg",
             contentType:"image/png"
         },
     },
@@ -127,7 +127,7 @@ const user={
         attendance:"Present",
         total:"30",
         image:{
-            data:"https://w7.pngwing.com/pngs/241/840/png-transparent-computer-icons-student-school-student-angle-people-logo-thumbnail.png",
+            data:"https://i.ibb.co/V9DgfQ3/IMG-4073.png",
             contentType:"image/png"
         },
     },
@@ -140,12 +140,12 @@ const user={
         attendance:"Absent",
         total:"30",
         image:{
-            data:"https://e7.pngegg.com/pngimages/1008/662/png-clipart-student-girl-school-girl-thinking-s-child-reading-thumbnail.png",
+            data:"https://i.ibb.co/6m0MJ5F/IMG-3901.jpg",
             contentType:"image/png"
         },
     },
     {
-        name:"Aswini",
+        name:"Nivesh",
         rollNo:"0007",
         standard:"10'th",
         section:"B",
@@ -153,23 +153,11 @@ const user={
         attendance:"Present",
         total:"30",
         image:{
-            data:"https://e7.pngegg.com/pngimages/1008/662/png-clipart-student-girl-school-girl-thinking-s-child-reading-thumbnail.png",
+            data:"https://i.ibb.co/F442Gpv/IMG-4042.jpg",
             contentType:"image/png"
         },
     },
-    {
-        name:"Gowri",
-        rollNo:"0008",
-        standard:"10'th",
-        section:"B",
-        date:"16/03/2023",
-        attendance:"Present",
-        total:"30",
-        image:{
-            data:"https://w7.pngwing.com/pngs/241/840/png-transparent-computer-icons-student-school-student-angle-people-logo-thumbnail.png",
-            contentType:"image/png"
-        },
-    },
+   
    
 ]}
 
