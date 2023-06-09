@@ -51,7 +51,7 @@ const image={
 classsperiod:[{
  
     image:{
-        data:"C:\Users\DELL\Desktop\school management\profile\IMG_1234.jpg",
+        data:"https://i.ibb.co/zHqXdsS/IMG-7890.jpg",
 contentType:"image/png"
     },
     name:"Harish",
@@ -60,7 +60,7 @@ contentType:"image/png"
 },
 {
     image:{
-        data:"C:\Users\DELL\Desktop\school management\profile\IMG_3901.JPG",
+        data:"https://i.ibb.co/nD4Lgzv/IMG-4567.jpg",
 contentType:"image/png"
     },
     name:"Prashanth",
@@ -69,35 +69,35 @@ contentType:"image/png"
 },
 {
     image:{
-        data:"C:\Users\DELL\Desktop\school management\profile\IMG_4042.JPG",
+        data:"https://i.ibb.co/T4cpxXj/IMG-4050.jpg",
 contentType:"image/png"
     },
-    name:"Shalini",
+    name:"Aswini",
     subject:"Tamil",
     time:"10.30am to 11.15am"
 },
 {
     image:{
-        data:"C:\Users\DELL\Desktop\school management\profile\IMG_4050.JPG",
+        data:"https://i.ibb.co/CtqLGfZ/IMG-1234.jpg",
 contentType:"image/png"
     },
-    name:"Damodaran",
+    name:"Gowrishankar",
     subject:"Social",
     time:"11.15am to 12.00am"
 }, 
 
 {
     image:{
-        data:"C:\Users\DELL\Desktop\school management\profile\IMG_4073.png",
+        data:"https://i.ibb.co/F442Gpv/IMG-4042.jpg",
 contentType:"image/png"
     },
-    name:"Aswini",
+    name:"Nivesh",
     subject:"Maths",
     time:"12.00am to 12.45am"
 },
 {
     image:{
-        data:"C:\Users\DELL\Desktop\school management\profile\IMG_4567.jpg",
+        data:"https://i.ibb.co/V9DgfQ3/IMG-4073.png",
 contentType:"image/png"
     },
     name:"Hari shankaran",
