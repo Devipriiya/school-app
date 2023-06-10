@@ -48,7 +48,7 @@ const upload = multer({
    
 }).single('testImage')
 const image={
-standard:"1st Standard",
+
 firstlist:[{
  
     image:{
@@ -149,7 +149,7 @@ router.get('/:id',(req,res)=>{
         }
         else{
            Studentlist.findById({_id:req.params.id},{
-            standard:req.body.standard,
+          
             image:{
                 data:req.file.filename,
                 contentType:'image/png'
@@ -183,7 +183,7 @@ router.post('/',(req,res)=>{
         }
         else{
             const newImage = new Studentlist({
-                standard:req.body.standard,
+           
                 image:{
                     data:req.file.filename,
                     contentType:'image/png'
@@ -204,7 +204,7 @@ router.put('/:id',(req,res)=>{
         }
         else{
             Studentlist.findOneAndUpdate({_id:req.params.id},{
-                standard:req.body.standard,
+          
                 image:{
                     data:req.file.filename,
                     contentType:'image/png'
@@ -236,7 +236,7 @@ router.delete('/:id',(req,res)=>{
         }
         else{
             Studentlist.deleteOne({_id:req.params.id},{
-                standard:req.body.standard,
+               
                 image:{
                     data:req.file.filename,
                     contentType:'image/png'

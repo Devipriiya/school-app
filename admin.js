@@ -13,6 +13,7 @@ import studentlist from "./studentslist.js";
 import teacherstimetable from "./teacherstimetable.js";
 import studenttimetable from "./studenttimetable.js";
 import studentfees from "./studentfees.js";
+import bookdetails from "./bookdetails.js";
 
 import alert from "./alert.js";
 import assignments from "./assignments.js";
@@ -60,6 +61,7 @@ app.use('/studentlist',studentlist);
 app.use('/teacherstimetable',teacherstimetable);
 app.use('/studenttimetable',studenttimetable)
 app.use('/studentfees',studentfees);
+app.use('/bookdetails',bookdetails);
 
 app.use('/alert',alert);
 app.use('/assignments',assignments);

@@ -21,8 +21,8 @@ const upload = multer({
     storage: Storage,
    
 }).single('testImage')
-const imagelist=[
- 
+const imagelist={
+ list:[
     {
     id:1 ,
     image:{
@@ -136,7 +136,8 @@ contentType:"image/png"
         contentType:"image/png"
             } 
 }
-]
+ ]
+}
 
 
 
@@ -146,7 +147,7 @@ router.get('/',(req,res)=>{
 
 router.get("/:id", (req, res) => {
     try {
-        const individualImage =imagelist.find(
+        const individualImage =imagelist.list.find(
           (c) => c.id === Number(req.params.id)
         );
         if (individualImage) {

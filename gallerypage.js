@@ -1,13 +1,12 @@
 import express from 'express';
-
+import mongoose from "mongoose";
 const app = express();
 import multer from "multer";
 import path from "path";
 
 const router =express.Router();
 
-import Gallery from './gallermodel.js';
-Gallery
+
 
 const Storage = multer.diskStorage({
     destination: './upload/images',
@@ -20,7 +19,44 @@ const upload = multer({
     storage: Storage,
    
 }).single('testImage')
-const gallerypage=[{
+
+const gallerySchema=mongoose.Schema(
+    {
+ 
+   id:{
+    type:String,
+    required:true,
+   },
+image:{
+    data:String,
+    contentType: String
+},
+day:{
+    type:String,
+    required:true,
+},
+name:{
+    type:String,
+   required:true,
+},
+    
+description:{
+    type:String,
+    required:true,
+}
+
+
+           
+     })
+     
+const Gallery =mongoose.model("Gallery",gallerySchema);
+gallerySchema.plugin(Gallery);
+
+
+
+const gallerypage={
+   gallerylist:[
+    {
    id:101,
     image:{
         
@@ -155,14 +191,14 @@ contentType:"image/png"
             description:"This image was taken in the year 2023 during the occassion of annual sports event which was held at chennai"
 },
 ]
-
+}
 router.get('/',(req,res)=>{
     res.send(gallerypage);
 })
 
 router.get("/:id", (req, res) => {
     try {
-        const individualImage = gallerypage.find(
+        const individualImage = gallerypage.gallerylist.find(
           (c) => c.id === Number(req.params.id)
         );
         if (individualImage) {
@@ -174,72 +210,29 @@ router.get("/:id", (req, res) => {
           res.json({ message: 505 });
         }
     });
-
-// router.get('/:id',(req,res)=>{
-//     upload(req,res,(err)=>{
-//         if(err){
-//             console.log(err)
-//         }
-//         else{
-//            Gallery.findById({_id:req.params.id},{
-                
-//                 image:{
-//                     data:req.file.filename,
-//                     contentType:'image/png'
-//                 },
-//                 day:req.body.day,
-//                 name:req.body.name,
-//                 description:req.body.description,
-//             })
-          
-//             .then(result=>{
-//                 res.status(200).json({
-//                    images:result
-//                 })
-//             })
-//             .catch(err=> {
-//             console.log(err);
-//             res.status(505).json({
-//                 error:err
-//             })
-//             }
-//           )
-//         }
-//     })
-    
-// })
-
-router.post('/',(req,res)=>{
- 
-        const individualImage = gallerypage.find(
-          (c) => c.id === Number(req.params.id)
-        );
-        if (individualImage) {
-            res.json(individualImage);
-          } else {
-            res.status(404).json({ message: "Not found" });
-          }
-    upload(req,res,(err)=>{
-        if(err){
-            console.log(err)
-        }
-        else{
-            const newImage = new Gallery({
-               id:req.body.id
-                // image:{
-                //     data:req.file.filename,
-                //     contentType:'image/png'
-                // },
-                // day:req.body.day,
-                // name:req.body.name,
-                // description:req.body.description,
-            })
-            newImage.save()
-        .then(()=>res.send('successfully uploaded')).catch(err=>console.log(err))
-        }
+    router.post('/',(req,res)=>{
+        upload(req,res,(err)=>{
+            if(err){
+                console.log(err)
+            }
+            else{
+                const newImage = new Gallery({
+                    id:req.body.id,
+                    image:{
+                        data:req.file.filename,
+                        contentType:'image/png'
+                    },
+                    day:req.body.day,
+                    name:req.body.name,
+                    description:req.body.description,
+                })
+                newImage.save()
+            .then(()=>res.send('successfully uploaded')).catch(err=>console.log(err))
+            }
+        })
+        
     })
 
-})
 router.put('/:id',(req,res)=>{
     upload(req,res,(err)=>{
         if(err){
@@ -247,7 +240,7 @@ router.put('/:id',(req,res)=>{
         }
         else{
           Gallery.findOneAndUpdate({_id:req.params.id},{
-          
+            id:req.body.id,
                 image:{
                     data:req.file.filename,
                     contentType:'image/png'
@@ -280,7 +273,7 @@ router.delete('/:id',(req,res)=>{
         }
         else{
            Gallery.deleteOne({_id:req.params.id},{
-             
+            id:req.body.id,
                 image:{
                     data:req.file.filename,
                     contentType:'image/png'
