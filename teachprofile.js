@@ -4,7 +4,10 @@ import multer from "multer";
 const router=express.Router();
 
 const teachprofileSchema=mongoose.Schema({
-    
+    image:{
+        data:String,
+     contentType: String
+    },
     name:{
         type:String,
         // required:true
@@ -40,10 +43,7 @@ const teachprofileSchema=mongoose.Schema({
         type:String,
         // required:true
     },
-    image:{
-        data:String,
-     contentType: String
-    }
+  
 
 
 })
@@ -64,8 +64,11 @@ const upload = multer({
 
 
 const user={
-    profile:[{
-        
+  
+    image:{
+        data:"https://i.ibb.co/zHqXdsS/IMG-7890.jpg",
+       contentType:"image/png"
+    }, 
     name     :"Harish",
     contactNo:"9876543210",
     faculty   :"Science and Social",
@@ -75,13 +78,10 @@ const user={
     fatherName:"Kasi",
     email     :"abc@gmail.com",
     address   :"Chennai",
-    image:{
-        data:"https://i.ibb.co/zHqXdsS/IMG-7890.jpg",
-       contentType:"image/png"
-    }
+ 
 
-},
-]}
+}
+
 
 // const app=express();
 // app.use(express.json());
@@ -106,6 +106,10 @@ router.get('/:id',(req,res)=>{
         }
         else{
             Teachprofile.findByID({_id:req.params.id},{
+                image:{
+                    data:req.image.imagename,
+                    contentType:'image'
+                },
                 name:req.body.name,
                 contactNo:req.body.contactNo,
                 faculty:req.body.faculty,
@@ -115,10 +119,7 @@ router.get('/:id',(req,res)=>{
                 fatherName:req.body.fatherName,
                 email:req.body.email,
                 address:req.body.address,
-                image:{
-                    data:req.image.imagename,
-                    contentType:'image'
-                }
+             
             })
                 .then(result=>{
                     res.status(200).json({
@@ -144,6 +145,10 @@ router.post('/',(req,res)=>{
         }
         else{
             const newFile = new Teachprofile({
+                image:{
+                    data:req.file.filename,
+                    contentType:'image'
+                },
                 name:req.body.name,
                 contactNo:req.body.contactNo,
                 faculty:req.body.faculty,
@@ -154,10 +159,7 @@ router.post('/',(req,res)=>{
                 email:req.body.email,
                 address:req.body.address,
                 
-                image:{
-                    data:req.file.filename,
-                    contentType:'image'
-                }
+              
             })
             newFile.save()
         .then(()=>res.send('successfully uploaded')).catch(err=>console.log(err))
@@ -175,6 +177,10 @@ router.post('/',(req,res)=>{
         }
         else{
             Teachprofile.findOneAndUpdate({_id:req.params.id},{
+                image:{
+                    data:req.file.filename,
+                    contentType:'image'
+                },
                 name:req.body.name,
                 contactNo:req.body.contactNo,
                 faculty:req.body.faculty,
@@ -184,10 +190,7 @@ router.post('/',(req,res)=>{
                 fatherName:req.body.fatherName,
                 email:req.body.email,
                 address:req.body.address,
-                image:{
-                    data:req.image.imagename,
-                    contentType:'image'
-                }
+             
             })
           
             .then(result=>{
@@ -216,6 +219,10 @@ router.post('/',(req,res)=>{
         }
         else{
             Teachprofile.deleteOne({_id:req.params.id},{
+                image:{
+                    data:req.file.filename,
+                    contentType:'image'
+                },
                 name:req.body.name,
                 contactNo:req.body.contactNo,
                 faculty:req.body.faculty,
@@ -225,10 +232,7 @@ router.post('/',(req,res)=>{
                 fatherName:req.body.fatherName,
                 email:req.body.email,
                 address:req.body.address,
-                image:{
-                    data:req.image.imagename,
-                    contentType:'image'
-                }
+              
             })
           
             .then(result=>{
