@@ -18,11 +18,8 @@ const upload = multer({
 }).single('testImage')
 const router =express.Router();
 const studenttimetableSchema=mongoose.Schema({
-    standard:{
-        type:String,
-       required:true,
-    },
-    day:[{
+ 
+    
     teacher:{
         type:String,
        required:true,
@@ -36,14 +33,13 @@ const studenttimetableSchema=mongoose.Schema({
         type:String,
        required:true,
     }
-}]
         
 })
 const Studenttimetable=mongoose.model("Studenttimetable",studenttimetableSchema);
 studenttimetableSchema.plugin(Studenttimetable);
 
 const studenttimetable={
-    standard:"1st standard",
+    // standard:"1st standard",
     day:[
         {
     teacher:"Aswini",
@@ -89,12 +85,12 @@ router.get('/:id',(req,res)=>{
         }
         else{
             Studenttimetable.findById({_id:req.params.id},{
-                standard:req.body.standard,
-                day:{
+                // standard:req.body.standard,
+                
                 teacher:req.body.teacher,
                 subject:req.body.subject,
                 schedule:req.body.schedule
-                }
+                
             })
           
             .then(result=>{
@@ -121,12 +117,12 @@ router.post('/',(req,res)=>{
         else{
             const newImage = new Studenttimetable({
             
-                standard:req.body.standard,
-                day:{
+                // standard:req.body.standard,
+           
                 teacher:req.body.teacher,
                 subject:req.body.subject,
                 schedule:req.body.schedule
-                }
+                
             })
             newImage.save()
         .then(()=>res.send('successfully uploaded')).catch(err=>console.log(err))
@@ -142,12 +138,12 @@ router.put('/:id',(req,res)=>{
         }
         else{
           Studenttimetable.findOneAndUpdate({_id:req.params.id},{
-            standard:req.body.standard,
-            day:{
+            // standard:req.body.standard,
+        
             teacher:req.body.teacher,
             subject:req.body.subject,
             schedule:req.body.schedule
-            }
+            
             })
           
             .then(result=>{
@@ -174,12 +170,12 @@ router.delete('/:id',(req,res)=>{
         else{
            Studenttimetable.deleteOne({_id:req.params.id},{
              
-            standard:req.body.standard,
-            day:{
+            // standard:req.body.standard,
+         
             teacher:req.body.teacher,
             subject:req.body.subject,
             schedule:req.body.schedule
-            }
+            
             })
           
             .then(result=>{
