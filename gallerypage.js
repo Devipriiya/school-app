@@ -57,7 +57,7 @@ gallerySchema.plugin(Gallery);
 const gallerypage={
    gallerylist:[
     {
-   id:101,
+   id:1,
     image:{
         
 data:"https://www.mountpleasantjuniors.co.uk/_images/1445100_l.png",
@@ -68,7 +68,7 @@ contentType:"image/png"
     description:"This image was taken in the year 2023 during the occassion of annual sports event which was held at chennai"
 },
 {
-    id:102,
+    id:2,
         image:{
             
     data:"https://w7.pngwing.com/pngs/4/364/png-transparent-culture-day-cultural-day-2018-cultural-diversity-cultures-culture-globe-world.png",
@@ -80,7 +80,7 @@ contentType:"image/png"
     description:"This image was taken in the year 2023 during the occassion of annual sports event which was held at chennai"
 },
 {
-    id:103,
+    id:3,
     image:{
         
 data:"https://www.citypng.com/public/uploads/preview/first-day-of-school-back-to-school-cartoon-png-316295863040lf5ls6il9.png",
@@ -91,7 +91,7 @@ contentType:"image/png"
     description:"This image was taken in the year 2023 during the occassion of annual sports event which was held at chennai"
 },
 {
-    id:104,
+    id:4,
    
     image:{
         
@@ -102,7 +102,7 @@ contentType:"image/png"
     name:"By Megha",
     description:"This image was taken in the year 2023 during the occassion of annual sports event which was held at chennai"
 },{
-    id:105,
+    id:5,
     image:{
         
         data:"https://w7.pngwing.com/pngs/537/592/png-transparent-children-s-day-banner-childrens-day-child-lovely.png",
@@ -113,7 +113,7 @@ contentType:"image/png"
             description:"This image was taken in the year 2023 during the occassion of annual sports event which was held at chennai"
 },
 {   
-    id:106,
+    id:6,
     image:{
         
         data:"https://e7.pngegg.com/pngimages/610/226/png-clipart-blue-green-and-orange-illustration-indian-independence-day-august-15-flag-of-india-independence-day-bubble-wish-culture.png",
@@ -124,7 +124,7 @@ contentType:"image/png"
             description:"This image was taken in the year 2023 during the occassion of annual sports event which was held at chennai"
 },
 {   
-    id:107,
+    id:7,
     image:{
         
         data:"https://toppng.com/uploads/preview/happy-teachers-day-transparent-happy-teachers-day-11563045098jkhxonw803.png",
@@ -135,7 +135,7 @@ contentType:"image/png"
             description:"This image was taken in the year 2023 during the occassion of annual sports event which was held at chennai"
 },
 {   
-    id:108,
+    id:8,
     image:{
         
         data:"https://w7.pngwing.com/pngs/841/26/png-transparent-pongal-festival-thumbnail.png",
@@ -146,7 +146,7 @@ contentType:"image/png"
             description:"This image was taken in the year 2023 during the occassion of annual sports event which was held at chennai"
 },
 {
-    id:109,
+    id:9,
     image:{
         
         data:"https://e7.pngegg.com/pngimages/76/991/png-clipart-silhouette-of-people-dancing-silhouette-celebrate-carnival-holidays-text-thumbnail.png",
@@ -157,7 +157,7 @@ contentType:"image/png"
             description:"This image was taken in the year 2023 during the occassion of annual sports event which was held at chennai"
 },
 {
-    id:110,
+    id:10,
     image:{
         
         data:"https://www.hindugirlscollege.com/wp-content/uploads/2021/10/Founders-Day.png",
@@ -168,7 +168,7 @@ contentType:"image/png"
             description:"This image was taken in the year 2023 during the occassion of annual sports event which was held at chennai"
 },
 {
-    id:111,
+    id:11,
     image:{
         
         data:"https://w7.pngwing.com/pngs/853/610/png-transparent-christmas-and-holiday-season-merry-christmas-food-holidays-decor-thumbnail.png",
@@ -180,7 +180,7 @@ contentType:"image/png"
 
 },
 {
-    id:112,
+    id:12,
     image:{
         
         data:"https://img.lovepik.com/element/45000/9387.png_860.png",
