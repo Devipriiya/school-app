@@ -64,21 +64,119 @@ const upload = multer({
 
 
 const user={
-  
+    profilelist:[{
+    id:1,
     image:{
         data:"https://i.ibb.co/zHqXdsS/IMG-7890.jpg",
        contentType:"image/png"
     }, 
     name     :"Harish",
-    contactNo:"9876543210",
-    faculty   :"Science and Social",
+    contactNo:"9577543261",
+    faculty   :"Tamil",
     department:"CSE",
-    bloodGroup    :"O'+ve",
+    bloodGroup    :"B'+ve",
     dob  :"23/04/1998",
     fatherName:"Kasi",
-    email     :"abc@gmail.com",
+    email     :"harishhsdp@gmail.com",
     address   :"Chennai",
- 
+},
+{
+    id:2,
+    image:{
+        data:"https://i.ibb.co/nD4Lgzv/IMG-4567.jpg",
+       contentType:"image/png"
+    }, 
+    name     :"Hem prashanth",
+    contactNo:"9876543210",
+    faculty   :"Computer Science",
+    department:"CSE",
+    bloodGroup    :"O'+ve",
+    dob  :"23/04/1999",
+    fatherName:"Selvam",
+    email     :"hemprashanthhsdp@gmail.com",
+    address   :"Krishnagiri",
+},
+{
+    id:3,
+    image:{
+        data:"https://i.ibb.co/CtqLGfZ/IMG-1234.jpg",
+       contentType:"image/png"
+    }, 
+    name     :"Gowrishankar",
+    contactNo:"9975543218",
+    faculty   :"Physics",
+    department:"CSE",
+    bloodGroup    :"A'+ve",
+    dob  :"03/07/1998",
+    fatherName:"Sundharam",
+    email     :"gowrishankarhsdp@gmail.com",
+    address   :"Chennai",
+},
+{
+    id:4,
+    image:{
+        data:"https://i.ibb.co/6m0MJ5F/IMG-3901.jp",
+       contentType:"image/png"
+    }, 
+    name     :"Megha",
+    contactNo:"9765432109",
+    faculty   :"English",
+    department:"CSE",
+    bloodGroup    :"O'+ve",
+    dob  :"03/06/2001",
+    fatherName:"Krisjnan",
+    email     :"meghahsdp@gmail.com",
+    address   :"Krishnagiri",
+},
+{
+    id:5,
+    image:{
+        data:"https://i.ibb.co/F442Gpv/IMG-4042.jpg",
+       contentType:"image/png"
+    }, 
+    name     :"Nivesh",
+    contactNo:"9779542210",
+    faculty   :"Maths",
+    department:"CSE",
+    bloodGroup    :"A'+ve",
+    dob  :"23/04/1995",
+    fatherName:"Srinivasan",
+    email     :"niveshhsdp@gmail.com",
+    address   :"Chennai",
+},
+{
+    id:6,
+    image:{
+        data:"https://i.ibb.co/T4cpxXj/IMG-4050.jpg",
+       contentType:"image/png"
+    }, 
+    name     :"Aswini",
+    contactNo:"9967890510",
+    faculty   :"Science",
+    department:"CSE",
+    bloodGroup    :"A'+ve",
+    dob  :"28/04/1999",
+    fatherName:"Gunasekaran",
+    email     :"aswinihsdp@gmail.com",
+    address   :"Tiruppur",
+},
+{
+    id:7,
+    image:{
+        data:"https://i.ibb.co/V9DgfQ3/IMG-4073.png",
+       contentType:"image/png"
+    }, 
+    name     :"Harishankaran",
+    contactNo:"9876543210",
+    faculty   :"Social",
+    department:"CSE",
+    bloodGroup    :"B'+ve",
+    dob  :"09/08/1999",
+    fatherName:"Shankar",
+    email     :"harihsdp@gmail.com",
+    address   :"Krishnagiri",
+},
+],
 
 }
 
@@ -99,43 +197,20 @@ router.get('/',(req,res)=>{
 
 // specificData
 
-router.get('/:id',(req,res)=>{
-    upload(req,res,(err)=>{
-        if(err){
-            console.log(err)
+router.get("/:id", (req, res) => {
+    try {
+        const individualImage =user.profilelist.find(
+          (c) => c.id === Number(req.params.id)
+        );
+        if (individualImage) {
+            res.json(individualImage);
+          } else {
+            res.status(404).json({ message: "Not found" });
+          }
+        } catch (error) {
+          res.json({ message: 505 });
         }
-        else{
-            Teachprofile.findByID({_id:req.params.id},{
-                image:{
-                    data:req.image.imagename,
-                    contentType:'image'
-                },
-                name:req.body.name,
-                contactNo:req.body.contactNo,
-                faculty:req.body.faculty,
-                department:req.body.department,
-                bloodGroup:req.body.bloodGroup,
-                dob:req.body.dob,
-                fatherName:req.body.fatherName,
-                email:req.body.email,
-                address:req.body.address,
-             
-            })
-                .then(result=>{
-                    res.status(200).json({
-                        files:result
-                    })
-                })
-                .catch(err=>{
-                    console.log(err);
-                    res.status(505).json({
-                        error:err
-                    })
-                }
-    )}
-    })
-})
-
+    });
 //post
 
 router.post('/',(req,res)=>{

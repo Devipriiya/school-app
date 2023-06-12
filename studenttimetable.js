@@ -19,11 +19,11 @@ const upload = multer({
 const router =express.Router();
 const studenttimetableSchema=mongoose.Schema({
  
-    id:{
-        type:String,
-        required:true,
-    },
-    day:[{
+    // id:{
+    //     type:String,
+    //     required:true,
+    // },
+    
     teacher:{
         type:String,
        required:true,
@@ -36,8 +36,8 @@ const studenttimetableSchema=mongoose.Schema({
     schedule:{
         type:String,
        required:true,
-}}
-    ]
+}
+    
         
 })
 const Studenttimetable=mongoose.model("Studenttimetable",studenttimetableSchema);
@@ -663,12 +663,12 @@ router.post('/',(req,res)=>{
             const newImage = new Studenttimetable({
             
                 // standard:req.body.standard,
-                id:req.body.id,
-                day:{
+                // id:req.body.id,
+               
                 teacher:req.body.teacher,
                 subject:req.body.subject,
                 schedule:req.body.schedule
-                }
+                
                 
             })
             newImage.save()
@@ -687,13 +687,13 @@ router.put('/:id',(req,res)=>{
           Studenttimetable.findOneAndUpdate({_id:req.params.id},{
             // standard:req.body.standard,
         
-            id:req.body.id,
-                day:{
+            // id:req.body.id,
+            //     day:{
                 teacher:req.body.teacher,
                 subject:req.body.subject,
                 schedule:req.body.schedule
                 }
-            })
+          )
           
             .then(result=>{
                 res.status(200).json({
@@ -720,12 +720,11 @@ router.delete('/:id',(req,res)=>{
            Studenttimetable.deleteOne({_id:req.params.id},{
              
             // standard:req.body.standard,
-           id:req.body.id,
-                day:{
+         
                 teacher:req.body.teacher,
                 subject:req.body.subject,
                 schedule:req.body.schedule
-                }
+                
             
             })
           
