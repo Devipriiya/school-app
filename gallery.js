@@ -22,7 +22,7 @@ const upload = multer({
    
 }).single('testImage')
 const imagelist={
- list:[
+ galleryimage:[
     {
     id:1 ,
     image:{
@@ -147,7 +147,7 @@ router.get('/',(req,res)=>{
 
 router.get("/:id", (req, res) => {
     try {
-        const individualImage =imagelist.list.find(
+        const individualImage =imagelist.galleryimage.find(
           (c) => c.id === Number(req.params.id)
         );
         if (individualImage) {
