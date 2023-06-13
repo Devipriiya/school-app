@@ -84,7 +84,7 @@ contentType:"image/png"
    id:8,
     image:{
         
-        data:"C:\Users\DELL\Desktop\school management\events\IMG_3982.JPG",
+        data:"https://i.ibb.co/1vsDh3Z/Whats-App-Image-2023-02-24-at-11-39-33-AM-28.jpg",
         contentType:"image/png"
             } 
 },
