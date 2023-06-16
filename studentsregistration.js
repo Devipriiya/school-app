@@ -72,6 +72,14 @@ address:{
 
 const Registration =mongoose.model("Registration",registrationSchema);
 registrationSchema.plugin(Registration);
+router.get('/',(req,res)=>{
+    try{
+        res.status(200).send(user);
+    }
+    catch(error){
+        res.json({message:"unable to create"});
+    }
+});
 // app.use(express.json());
 router.post('/',(req,res)=>{
     upload(req,res,(err)=>{
